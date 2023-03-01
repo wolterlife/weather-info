@@ -1,0 +1,27 @@
+.container {
+    font-family: "Kurale", sans-serif;
+    position: absolute;
+    color: white;
+    top: 20vh;
+    right: 4vw;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 1);
+}
+
+.eventList {
+    display: flex;
+}
+
+.textTime {
+    background: rgba(44, 33, 4, 0.4);
+    border-radius: 5px;
+    padding: 0 8px;
+    margin-top: 8px;
+    font-size: 17px;
+}
+
+.textEvent {
+    font-size: 17px;
+    margin-top: 8px;
+    margin-left: 14px;
+
+}
