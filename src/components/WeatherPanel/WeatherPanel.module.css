@@ -1,0 +1,95 @@
+.panel {
+    font-family: "Kurale", sans-serif;
+    margin-left: 2vw;
+    margin-bottom: 1vw;
+    position: absolute;
+    height: 35vh;
+    background: rgba(44, 33, 4, 0.6);
+    border: 1.5px solid #2C2104;
+    border-radius: 15px;
+    width: 96vw;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    overflow-y: hidden;
+    scrollbar-color: #6969dd #e0e0e0;
+    scrollbar-width: thin;
+}
+
+.panel::-webkit-scrollbar {
+    height: 8px;
+    width: 10px;
+
+}
+
+.panel::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.panel::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+
+.leftContainer {
+    margin-left: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+}
+
+.todayContainer {
+    flex-shrink: 0;
+
+    margin-left: 18px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.textToday {
+    margin-bottom: -20px;
+    font-size: 38px;
+}
+
+.textDegree {
+    margin: 0;
+    font-size: 74px;
+}
+
+.imgMain {
+    width: 150px;
+}
+
+.rightContainer {
+    display: flex;
+    color: #FFFFFF;
+    margin-left: 100px;
+}
+
+.containerDays {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 74px;
+}
+
+.textDays {
+    font-size: 28px;
+    margin-bottom: 10px
+}
+
+.imgSmallDays {
+    width: 90px;
+}
+
+.textDaysDegree {
+    font-size: 34px;
+    margin-top: 20px;
+}

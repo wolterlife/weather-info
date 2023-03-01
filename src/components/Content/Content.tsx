@@ -3,6 +3,7 @@ import styles from "./content.module.css"
 import InputCity from "../InputCity/InputCity";
 import TimeAndDate from "../TimeAndDate/TimeAndDate";
 import GoogleEvents from "../GoogleEvents/GoogleEvents";
+import WeatherPanel from "../WeatherPanel/WeatherPanel";
 
 const Content = () => {
     return (
@@ -10,6 +11,7 @@ const Content = () => {
             <InputCity />
             <TimeAndDate />
             <GoogleEvents />
+            <WeatherPanel />
         </div>
     )
 }
