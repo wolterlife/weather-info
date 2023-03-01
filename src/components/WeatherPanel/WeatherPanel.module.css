@@ -12,18 +12,16 @@
     display: flex;
     align-items: center;
     overflow-y: hidden;
-    scrollbar-color: #6969dd #e0e0e0;
-    scrollbar-width: thin;
 }
 
 .panel::-webkit-scrollbar {
     height: 8px;
     width: 10px;
-
 }
 
 .panel::-webkit-scrollbar-track {
     background-color: transparent;
+    margin-left: 58px;
 }
 
 .panel::-webkit-scrollbar-thumb {
