@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.time {
+    color: #FFFFFF;
+    font-family: 'Kurale', sans-serif;
+    margin: 0;
+    font-size: 104px;
+    /*100 font*/
+    text-shadow: 0 4px 5px rgba(0, 0, 0, 0.35);
+}
+
+.date {
+    margin-top: -20px;
+    font-family: 'Kurale', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    /*20 font*/
+
+    line-height: 30px;
+    color: #FFFFFF;
+    padding: 4px;
+    /*text-shadow: 0 4px 5px rgba(0, 0, 0, 0.65);*/
+    text-shadow: 0 4px 5px rgba(0, 0, 0, 1);
+}
