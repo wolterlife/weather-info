@@ -1,7 +1,7 @@
 .topButtons {
     position: absolute;
     bottom: 0;
-    margin-bottom: 34vh;
+    margin-bottom: 37vh;
     margin-left: 4vw;
     width: fit-content;
     background-color: transparent;
@@ -21,7 +21,10 @@
     padding-inline: 24px;
 }
 
-.textTopTime {
+.button {
+    font-family: "Kurale", sans-serif;
+    color: white;
+    cursor: pointer;
     font-size: 20px;
     width: 50%;
     text-align: center;
@@ -31,8 +34,16 @@
     padding-inline: 24px;
 }
 
-.textTopTime:hover {
-    cursor: pointer;
+.activeButton {
+    font-family: "Kurale", sans-serif;
+    color: white;
+    font-size: 20px;
+    width: 50%;
+    text-align: center;
+    background: rgba(44, 33, 4, 0.8);
+    border: 1px solid #2C2104;
+    border-radius: 10px 10px 0px 0px;
+    padding-inline: 24px;
 }
 
 .panel {

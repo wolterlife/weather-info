@@ -1,11 +1,17 @@
 import styles from "./WeatherPanel.module.css"
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
+import {changeModeOfWeather} from "../../redux/mainSlice";
 
 const WeatherPanel = () => {
+    const dispatch = useDispatch()
+    const isDateSelected = useSelector((state: RootState) => state.toolkitSlice.isDateMode)
+
     return (
         <>
             <div className={styles.topButtons}>
-                <p className={styles.textTopDate}>date</p>
-                <p className={styles.textTopTime}>time</p>
+                <button onClick={() => dispatch(changeModeOfWeather(true))} className={isDateSelected ? styles.activeButton : styles.button}>date</button>
+                <button onClick={() => dispatch(changeModeOfWeather(false))} className={!isDateSelected ? styles.activeButton : styles.button}>time</button>
             </div>
             <div className={styles.panel}>
                 <div className={styles.leftContainer}>
