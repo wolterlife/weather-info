@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './InputCity.module.css';
 import weatherApi from '../../redux/weatherApi';
 
 function InputCity() {
   const [inputCityField, setInputField] = useState('');
-  const [city, setCity] = useState('');
-  const { data, error } = weatherApi.useGetCityQuery(city);
+  const [currentPos, setCurrentPos] = useState({
+    lat: 0,
+    lng: 0,
+  });
+  const [, setCity] = useState('');
+  const { data, error } = weatherApi.useGetCityAndWeatherByPosQuery(currentPos);
+
+  useEffect(() => { // Get pos when user connected
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCurrentPos({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+      setInputField(data?.value);
+    });
+  }, []);
+
   return (
     <div className={styles.inputBackground}>
       <div className={styles.inputContent}>
         <input
+          defaultValue={data?.name}
           onChange={(v) => setInputField(v.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter') setCity(inputCityField); }}
           placeholder="Write city"
