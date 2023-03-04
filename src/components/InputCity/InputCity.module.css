@@ -38,3 +38,11 @@
     background-color: #ffffff;
     color: #ffffff;
 }
+
+.lineError {
+    margin-top: 0;
+    border: 0;
+    height: 1px;
+    background-color: #f12222;
+    color: #be1515;
+}
