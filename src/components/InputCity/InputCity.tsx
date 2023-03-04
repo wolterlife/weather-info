@@ -11,6 +11,7 @@ function InputCity() {
       <div className={styles.inputContent}>
         <input
           onChange={(v) => setInputField(v.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') setCity(inputCityField); }}
           placeholder="Write city"
           className={styles.input}
         />

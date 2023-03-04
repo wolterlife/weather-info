@@ -28,6 +28,7 @@ module.exports = {
   ],
   rules: {
     'no-param-reassign': 0,
+    'linebreak-style': 0,
     'import/extensions': [
       'error',
       'ignorePackages',
