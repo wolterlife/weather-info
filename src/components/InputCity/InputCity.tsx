@@ -5,11 +5,13 @@ import weatherApi from '../../redux/weatherApi';
 function InputCity() {
   const [inputCityField, setInputField] = useState('');
   const [currentPos, setCurrentPos] = useState({
-    lat: 0,
-    lng: 0,
+    lat: -9999,
+    lng: -9999,
   });
-  const [, setCity] = useState('');
-  const { data, error } = weatherApi.useGetCityAndWeatherByPosQuery(currentPos);
+
+  const [city, setCity] = useState('');
+  const { data } = weatherApi.useGetCityByPosQuery(currentPos);
+  const newCityCheck = weatherApi.useGetPosByCityQuery(city);
 
   useEffect(() => { // Get pos when user connected
     navigator.geolocation.getCurrentPosition((position) => {
@@ -17,9 +19,12 @@ function InputCity() {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       });
-      setInputField(data?.value);
     });
   }, []);
+
+  useEffect(() => { // Set default input
+    setInputField(data?.name);
+  }, [data]);
 
   return (
     <div className={styles.inputBackground}>
@@ -39,7 +44,7 @@ function InputCity() {
           alt="search"
         />
       </div>
-      <hr className={(error || data?.length === 0) ? styles.lineError : styles.line} />
+      <hr className={(newCityCheck.data?.length === 0) ? styles.lineError : styles.line} />
     </div>
 
   );
