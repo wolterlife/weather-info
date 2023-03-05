@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './InputCity.module.css';
 import weatherApi from '../../redux/weatherApi';
+import { changeCity } from '../../redux/mainSlice';
 
 function InputCity() {
+  const dispatch = useDispatch();
   const [inputCityField, setInputField] = useState('');
   const [currentPos, setCurrentPos] = useState({
     lat: -9999,
     lng: -9999,
   });
-
   const [city, setCity] = useState('');
   const { data } = weatherApi.useGetCityByPosQuery(currentPos);
   const newCityCheck = weatherApi.useGetPosByCityQuery(city);
@@ -24,6 +26,7 @@ function InputCity() {
 
   useEffect(() => { // Set default input
     setInputField(data?.name);
+    dispatch(changeCity(data?.name));
   }, [data]);
 
   return (
@@ -32,12 +35,20 @@ function InputCity() {
         <input
           defaultValue={data?.name}
           onChange={(v) => setInputField(v.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter') setCity(inputCityField); }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              setCity(inputCityField);
+              dispatch(changeCity(inputCityField));
+            }
+          }}
           placeholder="Write city"
           className={styles.input}
         />
         <input
-          onClick={() => setCity(inputCityField)}
+          onClick={() => {
+            setCity(inputCityField);
+            dispatch(changeCity(inputCityField));
+          }}
           type="image"
           src="/img/search.png"
           className={styles.imgSearch}

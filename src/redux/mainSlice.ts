@@ -14,12 +14,11 @@ const mainSlice = createSlice({
     changeModeOfWeather(state, action) {
       state.isDateMode = action.payload;
     },
-    changeLocation(state, action) {
-      state.location.lat = action.payload.lat;
-      state.location.lon = action.payload.lon;
+    changeCity(state, action) {
+      state.city = action.payload;
     },
   },
 });
 
 export default mainSlice.reducer;
-export const { changeModeOfWeather, changeLocation } = mainSlice.actions;
+export const { changeModeOfWeather, changeCity } = mainSlice.actions;
