@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const mainSlice = createSlice({
-  name: 'commonSlice',
+  name: 'mainSlice',
   initialState: {
     isDateMode: true,
     position: {

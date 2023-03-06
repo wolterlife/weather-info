@@ -12,8 +12,12 @@ function InputCity() {
     longitude: -9999,
   });
   const [cityConfirm, setCityConfirm] = useState('');
-  const dataCityByPos = weatherApi.useGetCityByPosQuery(currentPos);
-  const newCityCheck = weatherApi.useGetPosByCityQuery(cityConfirm);
+  const dataCityByPos = weatherApi.useGetCityByPosQuery(currentPos, {
+    skip: (currentPos.latitude === -9999),
+  });
+  const newCityCheck = weatherApi.useGetPosByCityQuery(cityConfirm, {
+    skip: (cityConfirm === ''),
+  });
 
   // Get pos when user connected
   useEffect(() => {
@@ -36,12 +40,10 @@ function InputCity() {
 
   // Send action with pos after city input
   useEffect(() => {
-    if (newCityCheck.data?.[0]?.lat !== undefined) {
-      dispatch(changePosition({
-        latitude: newCityCheck.data?.[0].lat,
-        longitude: newCityCheck.data?.[0].lon,
-      }));
-    }
+    dispatch(changePosition({
+      latitude: newCityCheck.data?.[0]?.lat,
+      longitude: newCityCheck.data?.[0]?.lon,
+    }));
   }, [newCityCheck]);
 
   return (
@@ -50,18 +52,12 @@ function InputCity() {
         <input
           defaultValue={dataCityByPos?.data?.name}
           onChange={(v) => setInputField(v.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              setCityConfirm(inputCityField);
-            }
-          }}
+          onKeyDown={(e) => { if (e.key === 'Enter') { setCityConfirm(inputCityField); } }}
           placeholder="Write city"
           className={styles.input}
         />
         <input
-          onClick={() => {
-            setCityConfirm(inputCityField);
-          }}
+          onClick={() => { setCityConfirm(inputCityField); }}
           type="image"
           src="/img/search.png"
           className={styles.imgSearch}
