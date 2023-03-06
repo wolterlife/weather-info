@@ -32,8 +32,8 @@ function TimeAndDate() {
           )
           : (
             <>
-              <p className={styles.time}>{dateTimeApi?.data?.time_24.slice(0, 5)}</p>
-              <p className={styles.date}>{dateTimeApi?.data?.date_time_txt.slice(0, 22).replace(0, '')}</p>
+              <p className={styles.time}>{dateTimeApi?.data?.time_24.slice(0, -3)}</p>
+              <p className={styles.date}>{dateTimeApi?.data?.date_time_txt.slice(0, -9)}</p>
             </>
           )
       }
