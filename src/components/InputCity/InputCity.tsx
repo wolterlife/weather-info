@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './InputCity.module.css';
-import weatherApi from '../../redux/weatherApi';
+import weatherApi from '../../redux/api/weatherApi';
 import { changePosition } from '../../redux/mainSlice';
 
 function InputCity() {
