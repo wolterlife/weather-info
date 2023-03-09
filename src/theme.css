@@ -1,0 +1,41 @@
+.cloudy {
+    --bg-color: rgba(17, 15, 39, 0.65);
+    --border-color: 1px solid #110F27;
+    --selector-selected-color: rgba(17, 15, 39, 0.8);
+    --scrollbar-color: rgba(255, 255, 255, 0.3);
+}
+
+.sun {
+    --bg-color: rgba(44, 33, 4, 0.6);
+    --border-color: 1px solid #2C2104;
+    --selector-selected-color: rgba(44, 33, 4, 0.8);
+    --scrollbar-color: rgba(0, 0, 0, 0.4)
+}
+
+.partly-cloudy {
+    --bg-color: rgba(128, 156, 172, 0.6);
+    --border-color: 1px solid #809CAC;
+    --selector-selected-color: rgba(128, 156, 172, 0.8);
+    --scrollbar-color: rgba(0, 0, 0, 0.4)
+}
+
+.rain {
+    --bg-color: rgba(25, 24, 34, 0.6);
+    --border-color: 1px solid #191822;
+    --selector-selected-color: rgba(25, 24, 34, 0.8);
+    --scrollbar-color: rgba(255, 255, 255, 0.3);
+}
+
+.snowy {
+    --bg-color: rgba(57, 100, 124, 0.6);
+    --border-color: 1px solid #39647C;
+    --selector-selected-color: rgba(57, 100, 124, 0.8);
+    --scrollbar-color: rgba(0, 0, 0, 0.4);
+}
+
+.storm {
+    --bg-color: rgba(57, 100, 124, 0.6);;
+    --border-color: 1px solid #39647C;
+    --selector-selected-color: rgba(57, 100, 124, 0.8);
+    --scrollbar-color: rgba(0, 0, 0, 0.4);
+}

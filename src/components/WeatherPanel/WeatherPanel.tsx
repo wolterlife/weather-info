@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import '../../theme.css';
+import cn from 'classnames';
 import styles from './WeatherPanel.module.css';
 import { RootState } from '../../redux/store';
 import weatherApi from '../../redux/api/weatherApi';
@@ -14,6 +16,7 @@ function WeatherPanel() {
   const weather = weatherApi.useGetWeatherByPosQuery(pos, {
     skip: pos.latitude === -9999 || pos.latitude === undefined,
   });
+  const currentWeather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
 
   function getImage(i: number, mod: string) {
     switch (weather.data?.[mod].weathercode[i]) {
@@ -49,19 +52,19 @@ function WeatherPanel() {
         <button
           type="button"
           onClick={() => setMod('daily')}
-          className={selectedMod === 'daily' ? styles.activeButton : styles.button}
+          className={selectedMod === 'daily' ? cn(styles.activeButton, currentWeather.slice(5, -4)) : cn(styles.button, currentWeather.slice(5, -4))}
         >
           date
         </button>
         <button
           type="button"
           onClick={() => setMod('hourly')}
-          className={selectedMod === 'hourly' ? styles.activeButton : styles.button}
+          className={selectedMod === 'hourly' ? cn(styles.activeButton, currentWeather.slice(5, -4)) : cn(styles.button, currentWeather.slice(5, -4))}
         >
           time
         </button>
       </div>
-      <div className={styles.panel}>
+      <div className={cn(styles.panel, currentWeather.slice(5, -4))}>
         <div className={styles.leftContainer}>
           <img
             className={styles.imgMain}

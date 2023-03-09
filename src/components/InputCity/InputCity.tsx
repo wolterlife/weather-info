@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import '../../theme.css';
+import cn from 'classnames';
 import styles from './InputCity.module.css';
 import cityApi from '../../redux/api/cityApi';
 import { changePosition } from '../../redux/mainSlice';
+import { RootState } from '../../redux/store';
 
 function InputCity() {
   const dispatch = useDispatch();
+  const weather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
   const [inputCityField, setInputField] = useState('');
   const [currentPos, setCurrentPos] = useState({
     latitude: -9999,
@@ -47,7 +51,7 @@ function InputCity() {
   }, [newCityCheck]);
 
   return (
-    <div className={styles.inputBackground}>
+    <div className={cn(styles.inputBackground, weather.slice(5, -4))}>
       <div className={styles.inputContent}>
         <input
           defaultValue={dataCityByPos?.data?.name}

@@ -12,7 +12,7 @@
 }
 
 .textTime {
-    background: rgba(44, 33, 4, 0.4);
+    background: var(--bg-color);
     border-radius: 5px;
     padding: 0 8px;
     margin-top: 8px;
