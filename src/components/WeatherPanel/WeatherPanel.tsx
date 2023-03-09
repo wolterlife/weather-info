@@ -1,90 +1,125 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './WeatherPanel.module.css';
 import { RootState } from '../../redux/store';
-import { changeModeOfWeather } from '../../redux/mainSlice';
+import weatherApi from '../../redux/api/weatherApi';
+import { changeWeather } from '../../redux/mainSlice';
 
 function WeatherPanel() {
   const dispatch = useDispatch();
-  const isDateSelected = useSelector((state: RootState) => state.toolkitSlice.isDateMode);
+  const [selectedMod, setMod] = useState('daily');
+  const pos = useSelector((state: RootState) => state.toolkitSlice.position);
+  const weather = weatherApi.useGetWeatherByPosQuery(pos, {
+    skip: pos.latitude === -9999 || pos.latitude === undefined,
+  });
+
+  function getImage(i: number, mod: string) {
+    switch (weather.data?.[mod].weathercode[i]) {
+      case (0): return '/img/sun.png';
+      case (1): return '/img/sun.png';
+      case (2): return '/img/partly-cloudy.png';
+      case (3): return '/img/cloudy.png';
+      case (45): return '/img/cloudy.png';
+      case (48): return '/img/cloudy.png';
+      case (71): return '/img/snowy.png';
+      case (73): return '/img/snowy.png';
+      case (75): return '/img/snowy.png';
+      case (77): return '/img/snowy.png';
+      case (80): return '/img/snowy.png';
+      case (81): return '/img/snowy.png';
+      case (82): return '/img/snowy.png';
+      case (85): return '/img/snowy.png';
+      case (86): return '/img/snowy.png';
+      case (95): return '/img/storm.png';
+      case (96): return '/img/storm.png';
+      case (99): return '/img/storm.png';
+      default: return '/img/rain.png';
+    }
+  }
+
+  useEffect(() => {
+    dispatch(changeWeather(getImage(0, 'daily')));
+  }, [weather]);
+
+  const arrsToObjDays = weather.data?.daily.time.map((item: object, index: number) => (
+    {
+      time: item,
+      weathercode: weather.data.daily.weathercode[index],
+      temperature_2m_max: weather.data.daily.temperature_2m_max[index],
+      temperature_2m_min: weather.data.daily.temperature_2m_min[index],
+    }
+  ));
+
+  const arrsToObjTimes = weather.data?.hourly.time.map((item: object, index: number) => (
+    {
+      time: item,
+      weathercode: weather.data.hourly.weathercode[index],
+      temperature_2m: weather.data.hourly.temperature_2m[index],
+    }
+  ));
+
+  const resTimes = arrsToObjTimes?.map((item: any, index: number) => (
+    <div key={item?.time} className={styles.containerDays}>
+      <p className={styles.textDays}>{item.time.slice(11)}</p>
+      <img className={styles.imgSmallDays} src={getImage(index, 'hourly')} alt="imgWeather" />
+      <p className={styles.textDaysDegree}>
+        {Math.round(item.temperature_2m)}
+        °
+      </p>
+    </div>
+  ));
+
+  const resDays = arrsToObjDays?.map((item: any, index: number) => (
+    <div key={item?.time} className={styles.containerDays}>
+      <p className={styles.textDays}>Thu</p>
+      <img className={styles.imgSmallDays} src={getImage(index, 'daily')} alt="imgWeather" />
+      <p className={styles.textDaysDegree}>
+        {Math.round(item.temperature_2m_max)}
+        °/
+        {Math.round(item.temperature_2m_min)}
+        °
+      </p>
+    </div>
+  ));
 
   return (
     <>
       <div className={styles.topButtons}>
         <button
           type="button"
-          onClick={() => dispatch(changeModeOfWeather(true))}
-          className={isDateSelected ? styles.activeButton : styles.button}
+          onClick={() => setMod('daily')}
+          className={selectedMod === 'daily' ? styles.activeButton : styles.button}
         >
           date
         </button>
         <button
           type="button"
-          onClick={() => dispatch(changeModeOfWeather(false))}
-          className={!isDateSelected ? styles.activeButton : styles.button}
+          onClick={() => setMod('hourly')}
+          className={selectedMod === 'hourly' ? styles.activeButton : styles.button}
         >
           time
         </button>
       </div>
       <div className={styles.panel}>
         <div className={styles.leftContainer}>
-          <img className={styles.imgMain} src="/img/sun.png" alt="Sun" />
+          <img
+            className={styles.imgMain}
+            src={getImage(0, 'daily')}
+            alt="Today Icon"
+          />
           <div className={styles.todayContainer}>
             <p className={styles.textToday}>Today</p>
-            <p className={styles.textDegree}>12°</p>
+            <p className={styles.textDegree}>
+              {Math.round(weather.data?.daily?.temperature_2m_max[0])}
+              °/
+              {Math.round(weather.data?.daily?.temperature_2m_min[0])}
+              °
+            </p>
           </div>
         </div>
         <div className={styles.rightContainer}>
-          <div className={styles.containerDays}>
-            <p className={styles.textDays}>Thu</p>
-            <img className={styles.imgSmallDays} src="/img/partly-cloudy.png" alt="partly-cloudy" />
-            <p className={styles.textDaysDegree}>11°</p>
-          </div>
-          <div className={styles.containerDays}>
-            <p className={styles.textDays}>Thu</p>
-            <img className={styles.imgSmallDays} src="/img/partly-cloudy.png" alt="partly-cloudy" />
-            <p className={styles.textDaysDegree}>11°</p>
-          </div>
-          <div className={styles.containerDays}>
-            <p className={styles.textDays}>Thu</p>
-            <img className={styles.imgSmallDays} src="/img/partly-cloudy.png" alt="partly-cloudy" />
-            <p className={styles.textDaysDegree}>11°</p>
-          </div>
-          <div className={styles.containerDays}>
-            <p className={styles.textDays}>Thu</p>
-            <img className={styles.imgSmallDays} src="/img/partly-cloudy.png" alt="partly-cloudy" />
-            <p className={styles.textDaysDegree}>11°</p>
-          </div>
-          <div className={styles.containerDays}>
-            <p className={styles.textDays}>Thu</p>
-            <img className={styles.imgSmallDays} src="/img/partly-cloudy.png" alt="partly-cloudy" />
-            <p className={styles.textDaysDegree}>11°</p>
-          </div>
-          <div className={styles.containerDays}>
-            <p className={styles.textDays}>Thu</p>
-            <img className={styles.imgSmallDays} src="/img/partly-cloudy.png" alt="partly-cloudy" />
-            <p className={styles.textDaysDegree}>11°</p>
-          </div>
-          <div className={styles.containerDays}>
-            <p className={styles.textDays}>Thu</p>
-            <img className={styles.imgSmallDays} src="/img/partly-cloudy.png" alt="partly-cloudy" />
-            <p className={styles.textDaysDegree}>11°</p>
-          </div>
-          <div className={styles.containerDays}>
-            <p className={styles.textDays}>Thu</p>
-            <img className={styles.imgSmallDays} src="/img/partly-cloudy.png" alt="partly-cloudy" />
-            <p className={styles.textDaysDegree}>11°</p>
-          </div>
-          <div className={styles.containerDays}>
-            <p className={styles.textDays}>Thu</p>
-            <img className={styles.imgSmallDays} src="/img/partly-cloudy.png" alt="partly-cloudy" />
-            <p className={styles.textDaysDegree}>11°</p>
-          </div>
-          <div className={styles.containerDays}>
-            <p className={styles.textDays}>Thu</p>
-            <img className={styles.imgSmallDays} src="/img/partly-cloudy.png" alt="partly-cloudy" />
-            <p className={styles.textDaysDegree}>11°</p>
-          </div>
+          {selectedMod === 'daily' && resDays}
+          {selectedMod !== 'daily' && resTimes}
         </div>
       </div>
     </>

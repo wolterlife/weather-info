@@ -1,7 +1,7 @@
 .topButtons {
     position: absolute;
     bottom: 0;
-    margin-bottom: 233px;
+    margin-bottom: 219px;
     margin-left: 4vw;
     width: fit-content;
     background-color: transparent;
@@ -96,13 +96,13 @@
 }
 
 .textToday {
-    margin-bottom: -20px;
-    font-size: 38px;
+    margin-bottom: -5px;
+    font-size: 34px;
 }
 
 .textDegree {
     margin: 0;
-    font-size: 78px;
+    font-size: 54px;
 }
 
 .imgMain {

@@ -1,19 +1,22 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import mainSlice from './mainSlice';
-import weatherApi from './api/weatherApi';
+import cityApi from './api/cityApi';
 import timeApi from './api/timeApi';
+import weatherApi from './api/weatherApi';
 
 const rootReducer = combineReducers({
   toolkitSlice: mainSlice,
-  [weatherApi.reducerPath]: weatherApi.reducer,
+  [cityApi.reducerPath]: cityApi.reducer,
   [timeApi.reducerPath]: timeApi.reducer,
+  [weatherApi.reducerPath]: weatherApi.reducer,
 });
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
-    weatherApi.middleware,
+    cityApi.middleware,
     timeApi.middleware,
+    weatherApi.middleware,
   ),
 });
 

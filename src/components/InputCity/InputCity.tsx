@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './InputCity.module.css';
-import weatherApi from '../../redux/api/weatherApi';
+import cityApi from '../../redux/api/cityApi';
 import { changePosition } from '../../redux/mainSlice';
 
 function InputCity() {
@@ -12,10 +12,10 @@ function InputCity() {
     longitude: -9999,
   });
   const [cityConfirm, setCityConfirm] = useState('');
-  const dataCityByPos = weatherApi.useGetCityByPosQuery(currentPos, {
+  const dataCityByPos = cityApi.useGetCityByPosQuery(currentPos, {
     skip: (currentPos.latitude === -9999),
   });
-  const newCityCheck = weatherApi.useGetPosByCityQuery(cityConfirm, {
+  const newCityCheck = cityApi.useGetPosByCityQuery(cityConfirm, {
     skip: (cityConfirm === ''),
   });
 
