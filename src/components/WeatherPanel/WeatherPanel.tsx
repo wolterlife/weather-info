@@ -4,9 +4,10 @@ import styles from './WeatherPanel.module.css';
 import { RootState } from '../../redux/store';
 import weatherApi from '../../redux/api/weatherApi';
 import { changeWeather } from '../../redux/mainSlice';
+import PanelDate from '../panelDate/panelDate';
+import PanelTime from '../panelTime/panelTime';
 
 function WeatherPanel() {
-  const localTime = new Date();
   const dispatch = useDispatch();
   const [selectedMod, setMod] = useState('daily');
   const pos = useSelector((state: RootState) => state.toolkitSlice.position);
@@ -41,55 +42,6 @@ function WeatherPanel() {
   useEffect(() => {
     dispatch(changeWeather(getImage(0, 'daily')));
   }, [weather]);
-
-  const arrsToObjDays = weather.data?.daily.time.map((item: object, index: number) => (
-    {
-      time: item,
-      weathercode: weather.data.daily.weathercode[index],
-      temperature_2m_max: weather.data.daily.temperature_2m_max[index],
-      temperature_2m_min: weather.data.daily.temperature_2m_min[index],
-    }
-  ));
-
-  const arrsToObjTimes = weather.data?.hourly.time.map((item: object, index: number) => (
-    {
-      time: item,
-      weathercode: weather.data.hourly.weathercode[index],
-      temperature_2m: weather.data.hourly.temperature_2m[index],
-    }
-  ));
-
-  const resTimes = arrsToObjTimes
-    ?.filter((el: any) => +el.time.slice(11, 13) >= +localTime.toLocaleTimeString().slice(0, -6))
-    .map((item: any, index: number) => (
-      <div key={item?.time} className={styles.containerDays}>
-        <p className={styles.textDays}>{item.time.slice(11)}</p>
-        <img className={styles.imgSmallDays} src={getImage(index, 'hourly')} alt="imgWeather" />
-        <p className={styles.textDaysDegree}>
-          {Math.round(item.temperature_2m)}
-          °
-        </p>
-      </div>
-  ));
-
-  function getDate(time: string) {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const mDate = new Date(Date.parse(time));
-    return (days[mDate.getDay()]);
-  }
-
-  const resDays = arrsToObjDays?.map((item: any, index: number) => (
-    <div key={item?.time} className={styles.containerDays}>
-      <p className={styles.textDays}>{getDate(item.time)}</p>
-      <img className={styles.imgSmallDays} src={getImage(index, 'daily')} alt="imgWeather" />
-      <p className={styles.textDaysDegree}>
-        {Math.round(item.temperature_2m_max)}
-        °/
-        {Math.round(item.temperature_2m_min)}
-        °
-      </p>
-    </div>
-  ));
 
   return (
     <>
@@ -127,8 +79,8 @@ function WeatherPanel() {
           </div>
         </div>
         <div className={styles.rightContainer}>
-          {selectedMod === 'daily' && resDays?.slice(1)}
-          {selectedMod !== 'daily' && resTimes?.slice(0, 24 - +localTime.toLocaleTimeString().slice(0, -6))}
+          {selectedMod === 'daily' && <PanelDate weather={weather.data} />}
+          {selectedMod !== 'daily' && <PanelTime weather={weather.data} />}
         </div>
       </div>
     </>
