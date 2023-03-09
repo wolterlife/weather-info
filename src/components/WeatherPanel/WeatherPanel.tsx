@@ -6,6 +6,7 @@ import weatherApi from '../../redux/api/weatherApi';
 import { changeWeather } from '../../redux/mainSlice';
 
 function WeatherPanel() {
+  const localTime = new Date();
   const dispatch = useDispatch();
   const [selectedMod, setMod] = useState('daily');
   const pos = useSelector((state: RootState) => state.toolkitSlice.position);
@@ -58,20 +59,28 @@ function WeatherPanel() {
     }
   ));
 
-  const resTimes = arrsToObjTimes?.map((item: any, index: number) => (
-    <div key={item?.time} className={styles.containerDays}>
-      <p className={styles.textDays}>{item.time.slice(11)}</p>
-      <img className={styles.imgSmallDays} src={getImage(index, 'hourly')} alt="imgWeather" />
-      <p className={styles.textDaysDegree}>
-        {Math.round(item.temperature_2m)}
-        °
-      </p>
-    </div>
+  const resTimes = arrsToObjTimes
+    ?.filter((el: any) => +el.time.slice(11, 13) >= +localTime.toLocaleTimeString().slice(0, -6))
+    .map((item: any, index: number) => (
+      <div key={item?.time} className={styles.containerDays}>
+        <p className={styles.textDays}>{item.time.slice(11)}</p>
+        <img className={styles.imgSmallDays} src={getImage(index, 'hourly')} alt="imgWeather" />
+        <p className={styles.textDaysDegree}>
+          {Math.round(item.temperature_2m)}
+          °
+        </p>
+      </div>
   ));
+
+  function getDate(time: string) {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const mDate = new Date(Date.parse(time));
+    return (days[mDate.getDay()]);
+  }
 
   const resDays = arrsToObjDays?.map((item: any, index: number) => (
     <div key={item?.time} className={styles.containerDays}>
-      <p className={styles.textDays}>Thu</p>
+      <p className={styles.textDays}>{getDate(item.time)}</p>
       <img className={styles.imgSmallDays} src={getImage(index, 'daily')} alt="imgWeather" />
       <p className={styles.textDaysDegree}>
         {Math.round(item.temperature_2m_max)}
@@ -118,8 +127,8 @@ function WeatherPanel() {
           </div>
         </div>
         <div className={styles.rightContainer}>
-          {selectedMod === 'daily' && resDays}
-          {selectedMod !== 'daily' && resTimes}
+          {selectedMod === 'daily' && resDays?.slice(1)}
+          {selectedMod !== 'daily' && resTimes?.slice(0, 24 - +localTime.toLocaleTimeString().slice(0, -6))}
         </div>
       </div>
     </>
