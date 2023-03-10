@@ -1,7 +1,7 @@
 .topButtons {
     position: absolute;
     bottom: 0;
-    margin-bottom: 219px;
+    margin-bottom: 218px;
     margin-left: 4vw;
     width: fit-content;
     background-color: transparent;
@@ -41,7 +41,7 @@
     margin-inline: 2vw;
     margin-bottom: 1vw;
     position: absolute;
-    height: fit-content;
+    height: 203px;
     background: var(--bg-color);
     border: var(--border-color);
     border-radius: 15px;

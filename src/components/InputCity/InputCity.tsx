@@ -23,6 +23,15 @@ function InputCity() {
     skip: (cityConfirm === ''),
   });
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      console.log(inputCityField);
+      // Send Axios request here
+    }, 600);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [inputCityField]);
+
   // Get pos when user connected
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords }) => {

@@ -27,7 +27,7 @@ function TimeAndDate() {
       index = t.length - 1;
       return (`${dateTimeApi?.data?.date_time_txt.slice(0, index)}${dateTimeApi?.data?.date_time_txt.slice(index + 1).slice(0, -8)}`);
     }
-    return dateTimeApi?.data?.date_time_txt.slice(0, -4);
+    return dateTimeApi?.data?.date_time_txt.slice(0, -9);
   }
 
   return (
