@@ -20,6 +20,7 @@ function WeatherPanel() {
 
   function getImage(i: number, mod: string) {
     switch (weather.data?.[mod].weathercode[i]) {
+      case undefined: return '/img/sun.png';
       case (0): return '/img/sun.png';
       case (1): return '/img/sun.png';
       case (2): return '/img/partly-cloudy.png';
@@ -65,26 +66,30 @@ function WeatherPanel() {
         </button>
       </div>
       <div className={cn(styles.panel, currentWeather.slice(5, -4))}>
-        <div className={styles.leftContainer}>
-          <img
-            className={styles.imgMain}
-            src={getImage(0, 'daily')}
-            alt="Today Icon"
-          />
-          <div className={styles.todayContainer}>
-            <p className={styles.textToday}>Today</p>
-            <p className={styles.textDegree}>
-              {Math.round(weather.data?.daily?.temperature_2m_max[0])}
-              °/
-              {Math.round(weather.data?.daily?.temperature_2m_min[0])}
-              °
-            </p>
-          </div>
-        </div>
-        <div className={styles.rightContainer}>
-          {selectedMod === 'daily' && <PanelDate weather={weather.data} />}
-          {selectedMod !== 'daily' && <PanelTime weather={weather.data} />}
-        </div>
+        {(weather.data !== undefined) ? (
+          <>
+            <div className={styles.leftContainer}>
+              <img
+                className={styles.imgMain}
+                src={getImage(0, 'daily')}
+                alt="Today Icon"
+              />
+              <div className={styles.todayContainer}>
+                <p className={styles.textToday}>Today</p>
+                <p className={styles.textDegree}>
+                  {Math.round(weather.data?.daily?.temperature_2m_max[0])}
+                  °/
+                  {Math.round(weather.data?.daily?.temperature_2m_min[0])}
+                  °
+                </p>
+              </div>
+            </div>
+            <div className={styles.rightContainer}>
+              {selectedMod === 'daily' && <PanelDate weather={weather.data} />}
+              {selectedMod !== 'daily' && <PanelTime weather={weather.data} />}
+            </div>
+          </>
+) : (<p className={styles.textNoCity}> Enter your city to get weather information</p>)}
       </div>
     </>
   );

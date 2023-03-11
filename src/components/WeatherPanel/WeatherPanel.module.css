@@ -1,7 +1,7 @@
 .topButtons {
     position: absolute;
-    bottom: 0;
-    margin-bottom: 218px;
+    bottom: 1vh;
+    margin-bottom: 211px;
     margin-left: 4vw;
     width: fit-content;
     background-color: transparent;
@@ -39,7 +39,7 @@
 .panel {
     font-family: "Kurale", sans-serif;
     margin-inline: 2vw;
-    margin-bottom: 1vw;
+    margin-bottom: 2vh;
     position: absolute;
     height: 203px;
     background: var(--bg-color);
@@ -73,7 +73,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 300px;
+    min-width: 300px;
 }
 
 .todayContainer {
@@ -96,13 +96,13 @@
 }
 
 .imgMain {
-    width: 150px;
+    width: 130px;
 }
 
 .rightContainer {
     display: flex;
     color: #FFFFFF;
-    margin-left: 100px;
+    margin-left: 80px;
 }
 
 .containerDays {
@@ -125,4 +125,42 @@
 .textDaysDegree {
     font-size: 34px;
     margin: 10px 0 0 0;
+}
+
+.textNoCity {
+    width: 100%;
+    text-align: center;
+    font-size: 48px;
+    color: #FFFFFF;
+}
+
+@media (max-width: 990px) {
+    .panel {
+        bottom: 0px;
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        width: fit-content;
+        margin: 0;
+    }
+
+    .topButtons {
+        bottom: 396px;
+    }
+
+    .imgMain {
+        width: 88px;
+    }
+
+    .rightContainer {
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 0;
+    }
+
+    .containerDays {
+        flex-direction: row;
+        justify-content: space-between;
+        margin-right: 0;
+    }
 }
