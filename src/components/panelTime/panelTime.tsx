@@ -36,6 +36,7 @@ function PanelTime(props: any) {
     }
   ));
 
+  // TODO: (fix) В другом городе идёт сравнение с локальным времнем
   const resTimes = arrsToObjTimes
     ?.filter((el: any) => +el.time.slice(11, 13) >= +localTime.toLocaleTimeString().slice(0, -6))
     .map((item: any, index: number) => (

@@ -48,7 +48,7 @@ function WeatherPanel() {
   }, [weather]);
 
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.topButtons}>
         <button
           type="button"
@@ -91,7 +91,7 @@ function WeatherPanel() {
           </>
 ) : (<p className={styles.textNoCity}> Enter your city to get weather information</p>)}
       </div>
-    </>
+    </div>
   );
 }
 
