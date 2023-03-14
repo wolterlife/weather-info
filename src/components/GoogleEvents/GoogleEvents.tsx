@@ -32,9 +32,11 @@ function GoogleEvents() {
 
   return (
     <div className={styles.container}>
-      <button onClick={() => apiCalendar.handleAuthClick()} type="button">sign in</button>
-      <button onClick={() => getEvents()} type="button">events</button>
-      {res}
+      <div className={styles.containerEvents}>
+        <button onClick={() => apiCalendar.handleAuthClick()} type="button">sign in</button>
+        <button onClick={() => getEvents()} type="button">events</button>
+        {res}
+      </div>
     </div>
   );
 }

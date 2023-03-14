@@ -1,14 +1,15 @@
 .container {
     font-family: "Kurale", sans-serif;
     position: absolute;
-    color: white;
     top: 20vh;
     right: 4vw;
     text-shadow: 0 1px 5px rgba(0, 0, 0, 1);
+    color: white;
 }
 
 .eventList {
     display: flex;
+    align-items: center;
 }
 
 .textTime {
@@ -23,5 +24,16 @@
     font-size: 17px;
     margin-top: 8px;
     margin-left: 14px;
+    max-width: 200px;
+}
 
+@media (max-width: 990px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: static;
+        margin-top: 60px;
+    }
 }

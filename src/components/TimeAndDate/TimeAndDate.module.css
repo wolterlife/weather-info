@@ -19,9 +19,24 @@
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
-
     line-height: 30px;
     color: #FFFFFF;
     padding: 4px;
     text-shadow: 0 4px 5px rgba(0, 0, 0, 1);
+}
+
+@media (max-width: 990px) {
+    .container {
+        position: absolute;
+        top: 0;
+        margin-left: 340px;
+    }
+
+    .time {
+        font-size: 64px;
+    }
+
+    .date {
+        font-size: 18px;
+    }
 }
