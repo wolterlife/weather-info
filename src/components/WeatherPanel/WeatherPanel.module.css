@@ -142,7 +142,7 @@
     .container {
         display: flex;
         flex-direction: column;
-        margin-top: 80px;
+        margin-top: 60px;
         align-items: center;
         justify-content: center;
         padding-bottom: 24px;
@@ -168,9 +168,8 @@
 
     .topButtons {
         position: static;
-        height: 36px;
         margin-right: 180px;
-        -webkit-tap-highlight-color: transparent;
+        margin-bottom: 0;
     }
 
     .todayContainer {
@@ -223,8 +222,5 @@
 
     .containerDays:last-child {
         border: 0;
-    }
-    @media (max-width: 865px) {
-        /*TODO: Рассположить */
     }
 }
