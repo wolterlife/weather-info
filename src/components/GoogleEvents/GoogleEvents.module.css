@@ -7,6 +7,13 @@
     color: white;
 }
 
+.buttonCalendar {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    width: 42px;
+}
+
 .eventList {
     display: flex;
     align-items: center;
@@ -35,5 +42,12 @@
         align-items: center;
         position: static;
         margin-top: 60px;
+    }
+}
+
+@media (max-width: 600px) {
+    .buttonCalendar {
+        top: 470px;
+        right: 90px;
     }
 }

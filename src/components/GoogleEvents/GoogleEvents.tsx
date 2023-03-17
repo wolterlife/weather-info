@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import styles from './GoogleEvents.module.css';
@@ -6,19 +7,30 @@ import apiCalendar from '../../redux/api/googleApi';
 import { RootState } from '../../redux/store';
 
 function GoogleEvents() {
+  // eslint-disable-next-line no-unused-vars
   const [events, setEvents] = useState([]);
   const currentWeather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
-
+  const [auth, setAuth] = useState(false);
   const getCurrentDate = () => {
     const d = new Date();
     return d.toJSON().slice(0, 10);
   };
+  //
+  // const getEvents = () => {
+  //   apiCalendar?.listUpcomingEvents(5).then(({ result }: any) => {
+  //     setEvents(result.items);
+  //   });
+  // };
 
-  const getEvents = () => {
-    apiCalendar.listUpcomingEvents(5).then(({ result }: any) => {
-      setEvents(result.items);
-    });
-  };
+  useEffect(() => {
+    if (auth) {
+      setInterval(() => {
+        apiCalendar?.listUpcomingEvents(5).then(({ result }: any) => {
+          setEvents(result.items);
+        });
+      }, 5000);
+    }
+  }, [auth]);
 
   const res = events.filter((el: any) => el.start.dateTime?.slice(0, 10) === getCurrentDate())
     .map((item: any) => (
@@ -30,14 +42,21 @@ function GoogleEvents() {
       </div>
     ));
 
+  async function authFoo() {
+    await apiCalendar.handleAuthClick();
+    apiCalendar.onLoad(() => setAuth(true));
+  }
+
   return (
-    <div className={styles.container}>
-      <div className={styles.containerEvents}>
-        <button onClick={() => apiCalendar.handleAuthClick()} type="button">sign in</button>
-        <button onClick={() => getEvents()} type="button">events</button>
-        {res}
+    <>
+      <input className={styles.buttonCalendar} type="image" src="/img/google-calendar.png" onClick={() => authFoo()} alt="sign in (google calendar)" />
+      <div className={styles.container}>
+        <div className={styles.containerEvents}>
+          {res}
+        </div>
       </div>
-    </div>
+    </>
+
   );
 }
 

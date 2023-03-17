@@ -31,9 +31,6 @@ function WeatherPanel() {
       case (73): return '/img/snowy.png';
       case (75): return '/img/snowy.png';
       case (77): return '/img/snowy.png';
-      case (80): return '/img/snowy.png';
-      case (81): return '/img/snowy.png';
-      case (82): return '/img/snowy.png';
       case (85): return '/img/snowy.png';
       case (86): return '/img/snowy.png';
       case (95): return '/img/storm.png';
