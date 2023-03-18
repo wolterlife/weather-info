@@ -47,7 +47,8 @@
 
 @media (max-width: 600px) {
     .buttonCalendar {
-        top: 470px;
-        right: 90px;
+        position: relative;
+        top: 140px;
+        left: 310px;
     }
 }

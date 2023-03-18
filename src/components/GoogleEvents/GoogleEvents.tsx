@@ -9,6 +9,7 @@ function GoogleEvents() {
   const [events, setEvents] = useState([]);
   const currentWeather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
   const [auth, setAuth] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true);
   const getCurrentDate = () => {
     const d = new Date();
     return d.toJSON().slice(0, 10);
@@ -19,6 +20,7 @@ function GoogleEvents() {
       setInterval(() => {
         apiCalendar?.listUpcomingEvents(5).then(({ result }: any) => {
           setEvents(result.items);
+          setButtonVisible(false);
         });
       }, 5000);
     }
@@ -41,14 +43,13 @@ function GoogleEvents() {
 
   return (
     <>
-      <input className={styles.buttonCalendar} type="image" src="/img/google-calendar.png" onClick={() => authFoo()} alt="sign in (google calendar)" />
+      {buttonVisible && (<input className={styles.buttonCalendar} type="image" src="/img/google-calendar.png" onClick={() => authFoo()} alt="sign in (google calendar)" />)}
       <div className={styles.container}>
         <div className={styles.containerEvents}>
           {res}
         </div>
       </div>
     </>
-
   );
 }
 
