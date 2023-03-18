@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
@@ -7,7 +6,6 @@ import apiCalendar from '../../redux/api/googleApi';
 import { RootState } from '../../redux/store';
 
 function GoogleEvents() {
-  // eslint-disable-next-line no-unused-vars
   const [events, setEvents] = useState([]);
   const currentWeather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
   const [auth, setAuth] = useState(false);
@@ -15,12 +13,6 @@ function GoogleEvents() {
     const d = new Date();
     return d.toJSON().slice(0, 10);
   };
-  //
-  // const getEvents = () => {
-  //   apiCalendar?.listUpcomingEvents(5).then(({ result }: any) => {
-  //     setEvents(result.items);
-  //   });
-  // };
 
   useEffect(() => {
     if (auth) {
