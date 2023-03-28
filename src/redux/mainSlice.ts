@@ -8,7 +8,6 @@ const mainSlice = createSlice({
       latitude: -9999,
       longitude: -9999,
     },
-    cacheBlocker: false,
   },
   reducers: {
     changePosition(state, action) {
@@ -18,11 +17,8 @@ const mainSlice = createSlice({
     changeWeather(state, action) {
       state.currentWeather = action.payload;
     },
-    setCacheBlocker(state, action) {
-      state.cacheBlocker = action.payload;
-    },
   },
 });
 
 export default mainSlice.reducer;
-export const { changePosition, changeWeather, setCacheBlocker } = mainSlice.actions;
+export const { changePosition, changeWeather } = mainSlice.actions;
