@@ -86,7 +86,7 @@ function WeatherPanel() {
               {selectedMod !== 'daily' && <PanelTime weather={weather.data} />}
             </div>
           </>
-) : (<p className={styles.textNoCity}> Enter your city to get weather information</p>)}
+        ) : (<p className={styles.textNoCity}> Enter your city to get weather information</p>)}
       </div>
     </div>
   );

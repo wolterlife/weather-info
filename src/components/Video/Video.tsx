@@ -5,7 +5,7 @@ import { RootState } from '../../redux/store';
 
 function Video() {
   const currentWeather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
-  const [video, setVideo] = useState('sun');
+  const [video, setVideo] = useState('');
 
   useEffect(() => {
     setVideo(currentWeather.slice(5).replace('png', 'webm'));

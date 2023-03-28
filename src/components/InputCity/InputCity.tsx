@@ -13,46 +13,37 @@ function InputCity() {
   const weather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
   const [inputCityField, setInputField] = useState('');
   const [countryCode, setFlag] = useState('');
-  const [currentPos, setCurrentPos] = useState({
-    latitude: -9999,
-    longitude: -9999,
-  });
-  const [cityConfirm, setCityConfirm] = useState('');
-  const dataCityByPos = cityApi.useGetCityByPosQuery(currentPos, {
-    skip: (currentPos.latitude === -9999),
-  });
-  const newCityCheck = cityApi.useGetPosByCityQuery(cityConfirm, {
-    skip: (cityConfirm === ''),
-  });
+  const [getCityByPos, dataCityByPos] = cityApi.useLazyGetCityByPosQuery();
+  const [getPosByCity, newCityCheck] = cityApi.useLazyGetPosByCityQuery();
 
-  // Get pos when user connected
+  // Get pos when user connected (by geo)
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
-      setCurrentPos({
+      getCityByPos({
         latitude: coords.latitude,
         longitude: coords.longitude,
+      }).then((res) => {
+        dispatch(changePosition({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        }));
+        setInputField(res.data.name);
+        setFlag(res.data.sys.country);
       });
-      dispatch(changePosition({
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-      }));
-    });
+    }, ((error) => {
+      console.log(error);
+    }), { maximumAge: 0 });
   }, []);
 
-  // Set default input field
-  useEffect(() => {
-    setInputField(dataCityByPos.data?.name);
-    setFlag(dataCityByPos.data?.sys?.country);
-  }, [dataCityByPos]);
-
-  // Send action with pos after city input
-  useEffect(() => {
-    setFlag(newCityCheck.data?.[0]?.country);
-    dispatch(changePosition({
-      latitude: newCityCheck.data?.[0]?.lat,
-      longitude: newCityCheck.data?.[0]?.lon,
-    }));
-  }, [newCityCheck]);
+  function changePosFromInput(city: string) {
+    getPosByCity(city).then((res) => {
+      setFlag(res.data?.[0]?.country);
+      dispatch(changePosition({
+        latitude: res.data?.[0]?.lat,
+        longitude: res.data?.[0]?.lon,
+      }));
+    });
+  }
 
   return (
     <div className={cn(styles.inputBackground, weather.slice(5, -4))}>
@@ -61,12 +52,18 @@ function InputCity() {
         <input
           defaultValue={dataCityByPos?.data?.name}
           onChange={(v) => setInputField(v.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter') { setCityConfirm(inputCityField); } }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              changePosFromInput(inputCityField);
+            }
+          }}
           placeholder="Write city"
           className={styles.input}
         />
         <input
-          onClick={() => { setCityConfirm(inputCityField); }}
+          onClick={() => {
+            changePosFromInput(inputCityField);
+          }}
           type="image"
           src="/img/search.png"
           className={styles.imgSearch}
