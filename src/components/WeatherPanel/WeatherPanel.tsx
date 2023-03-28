@@ -13,13 +13,11 @@ function WeatherPanel() {
   const dispatch = useDispatch();
   const [selectedMod, setMod] = useState('daily');
   const pos = useSelector((state: RootState) => state.toolkitSlice.position);
-  const weather = weatherApi.useGetWeatherByPosQuery(pos, {
-    skip: pos.latitude === -9999 || pos.latitude === undefined,
-  });
+  const [getWeather, weather] = weatherApi.useLazyGetWeatherByPosQuery();
   const currentWeather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
 
-  function getImage(i: number, mod: string) {
-    switch (weather.data?.[mod].weathercode[i]) {
+  function getImage(i: number) {
+    switch (i) {
       case undefined: return '/img/sun.png';
       case (0): return '/img/sun.png';
       case (1): return '/img/sun.png';
@@ -41,8 +39,13 @@ function WeatherPanel() {
   }
 
   useEffect(() => {
-    dispatch(changeWeather(getImage(0, 'daily')));
-  }, [weather]);
+    if (pos.latitude !== -9999) {
+      getWeather(pos).then((res) => {
+        dispatch(changeWeather(getImage(res.data.daily.weathercode[0])));
+        console.log();
+      });
+    }
+  }, [pos]);
 
   return (
     <div className={styles.container}>
@@ -68,7 +71,7 @@ function WeatherPanel() {
             <div className={styles.leftContainer}>
               <img
                 className={styles.imgMain}
-                src={getImage(0, 'daily')}
+                src={getImage(weather.data.daily.weathercode[0])}
                 alt="Today Icon"
               />
               <div className={styles.todayContainer}>

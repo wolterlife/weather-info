@@ -18,21 +18,19 @@ function InputCity() {
 
   // Get pos when user connected (by geo)
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(({ coords }) => {
-      getCityByPos({
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-      }).then((res) => {
-        dispatch(changePosition({
+      navigator.geolocation.getCurrentPosition(({ coords }) => {
+        getCityByPos({
           latitude: coords.latitude,
           longitude: coords.longitude,
-        }));
-        setInputField(res.data.name);
-        setFlag(res.data.sys.country);
+        }).then((res) => {
+          dispatch(changePosition({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          }));
+          setInputField(res.data.name);
+          setFlag(res.data.sys.country);
+        });
       });
-    }, ((error) => {
-      console.log(error);
-    }), { maximumAge: 0 });
   }, []);
 
   function changePosFromInput(city: string) {
