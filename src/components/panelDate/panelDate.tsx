@@ -32,7 +32,7 @@ function PanelDate(props: any) {
     }
   }
 
-  const arrsToObjDays = props.weather?.daily.time.map((item: object, index: number) => (
+  const arrsToObjDays = props.weather?.daily?.time?.map((item: object, index: number) => (
     {
       time: item,
       weathercode: props.weather?.daily.weathercode[index],

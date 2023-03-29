@@ -12,8 +12,15 @@ import PanelTime from '../panelTime/panelTime';
 function WeatherPanel() {
   const dispatch = useDispatch();
   const [selectedMod, setMod] = useState('daily');
+  const [info, setInfo] = useState({
+    daily: {
+      weathercode: [],
+      temperature_2m_max: [],
+      temperature_2m_min: [],
+    },
+  });
   const pos = useSelector((state: RootState) => state.toolkitSlice.position);
-  const [getWeather, weather] = weatherApi.useLazyGetWeatherByPosQuery();
+  const [getWeather] = weatherApi.useLazyGetWeatherByPosQuery();
   const currentWeather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
 
   function getImage(i: number) {
@@ -38,12 +45,25 @@ function WeatherPanel() {
     }
   }
 
+  function isCacheLoading(): boolean {
+    const curDate = new Date();
+    const prevDate = localStorage.getItem('cache_time');
+    if (prevDate && localStorage.getItem('cache_weather')) return ((+curDate - +prevDate) / 60000 < 1);
+    return false;
+  }
+
   useEffect(() => {
-    if (pos.latitude !== -9999 && pos.latitude !== undefined) {
-      getWeather(pos).then((res) => {
-        dispatch(changeWeather(getImage(res.data?.daily.weathercode[0])));
-      });
-    }
+    if (isCacheLoading()) {
+      const cacheWeather = JSON.parse(localStorage.getItem('cache_weather') || '');
+      setInfo(cacheWeather);
+      dispatch(changeWeather(getImage(cacheWeather.daily.weathercode[0])));
+    } else if (pos.latitude !== -9999 && pos.latitude !== undefined) {
+        getWeather(pos).then((res) => {
+          dispatch(changeWeather(getImage(res.data?.daily.weathercode[0])));
+          setInfo(res.data);
+          localStorage.setItem('cache_weather', JSON.stringify(res.data));
+        });
+      }
   }, [pos]);
 
   return (
@@ -65,27 +85,27 @@ function WeatherPanel() {
         </button>
       </div>
       <div className={cn(styles.panel, currentWeather.slice(5, -4))}>
-        {(weather.data !== undefined) ? (
+        {(info.daily.weathercode.length > 0) ? (
           <>
             <div className={styles.leftContainer}>
               <img
                 className={styles.imgMain}
-                src={getImage(weather.data.daily.weathercode[0])}
+                src={getImage(info.daily?.weathercode[0])}
                 alt="Today Icon"
               />
               <div className={styles.todayContainer}>
                 <p className={styles.textToday}>Today</p>
                 <p className={styles.textDegree}>
-                  {Math.round(weather.data?.daily?.temperature_2m_max[0])}
+                  {Math.round(info.daily?.temperature_2m_max[0])}
                   °/
-                  {Math.round(weather.data?.daily?.temperature_2m_min[0])}
+                  {Math.round(info.daily?.temperature_2m_min[0])}
                   °
                 </p>
               </div>
             </div>
             <div className={styles.rightContainer}>
-              {selectedMod === 'daily' && <PanelDate weather={weather.data} />}
-              {selectedMod !== 'daily' && <PanelTime weather={weather.data} />}
+              {selectedMod === 'daily' && <PanelDate weather={info} />}
+              {selectedMod !== 'daily' && <PanelTime weather={info} />}
             </div>
           </>
         ) : (<p className={styles.textNoCity}> Enter your city to get weather information</p>)}

@@ -21,20 +21,20 @@ function InputCity() {
       localStorage.setItem('cache_city', city);
       localStorage.setItem('cache_flag', flag);
       localStorage.setItem('cache_pos', JSON.stringify(pos));
-      localStorage.setItem('cache_city_time', JSON.stringify(Date.now()));
+      localStorage.setItem('cache_time', JSON.stringify(Date.now()));
+      localStorage.removeItem('cache_weather');
     }
   }
 
   function isCacheLoading(): boolean {
     const curDate = new Date();
-    const prevDate = localStorage.getItem('cache_city_time');
+    const prevDate = localStorage.getItem('cache_time');
     if (prevDate) return ((+curDate - +prevDate) / 60000 < 1);
     return false;
   }
 
-  // Get pos when user connected (by geo)
+  // Get pos when user connected (by cache or geo)
   useEffect(() => {
-    console.log(isCacheLoading());
     if (isCacheLoading()) {
       const prevPos = JSON.parse(localStorage.getItem('cache_pos') || '{}');
       dispatch(changePosition({
@@ -80,7 +80,7 @@ function InputCity() {
           res.data?.[0]?.name,
           {
             lat: res.data?.[0]?.lat,
-            lon: res.data?.[0]?.longitude,
+            lon: res.data?.[0]?.lon,
           },
           res.data?.[0]?.country,
         );
