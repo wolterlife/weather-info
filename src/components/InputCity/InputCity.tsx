@@ -16,8 +16,34 @@ function InputCity() {
   const [getCityByPos, dataCityByPos] = cityApi.useLazyGetCityByPosQuery();
   const [getPosByCity, newCityCheck] = cityApi.useLazyGetPosByCityQuery();
 
+  function setCityCache(city: string, pos: object, flag: string): void {
+    if (city) {
+      localStorage.setItem('cache_city', city);
+      localStorage.setItem('cache_flag', flag);
+      localStorage.setItem('cache_pos', JSON.stringify(pos));
+      localStorage.setItem('cache_city_time', JSON.stringify(Date.now()));
+    }
+  }
+
+  function isCacheLoading(): boolean {
+    const curDate = new Date();
+    const prevDate = localStorage.getItem('cache_city_time');
+    if (prevDate) return ((+curDate - +prevDate) / 60000 < 1);
+    return false;
+  }
+
   // Get pos when user connected (by geo)
   useEffect(() => {
+    console.log(isCacheLoading());
+    if (isCacheLoading()) {
+      const prevPos = JSON.parse(localStorage.getItem('cache_pos') || '{}');
+      dispatch(changePosition({
+        latitude: prevPos.lat,
+        longitude: prevPos.lon,
+      }));
+      setInputField(localStorage.getItem('cache_city') || '');
+      setFlag(localStorage.getItem('cache_flag') || '');
+    } else {
       navigator.geolocation.getCurrentPosition(({ coords }) => {
         getCityByPos({
           latitude: coords.latitude,
@@ -29,18 +55,37 @@ function InputCity() {
           }));
           setInputField(res.data.name);
           setFlag(res.data.sys.country);
+          setCityCache(
+            res.data.name,
+            {
+              lat: coords.latitude,
+              lon: coords.longitude,
+            },
+            res.data.sys.country,
+          );
         });
       });
+    }
   }, []);
 
   function changePosFromInput(city: string) {
-    getPosByCity(city).then((res) => {
-      setFlag(res.data?.[0]?.country);
-      dispatch(changePosition({
-        latitude: res.data?.[0]?.lat,
-        longitude: res.data?.[0]?.lon,
-      }));
-    });
+    if (city) {
+      getPosByCity(city).then((res) => {
+        setFlag(res.data?.[0]?.country);
+        dispatch(changePosition({
+          latitude: res.data?.[0]?.lat,
+          longitude: res.data?.[0]?.lon,
+        }));
+        setCityCache(
+          res.data?.[0]?.name,
+          {
+            lat: res.data?.[0]?.lat,
+            lon: res.data?.[0]?.longitude,
+          },
+          res.data?.[0]?.country,
+        );
+      });
+    }
   }
 
   return (
@@ -48,7 +93,7 @@ function InputCity() {
       <div className={styles.inputContent}>
         <span className={cn(styles.flag, `fi fi-${countryCode?.toLowerCase()}`)}>{countryCode}</span>
         <input
-          defaultValue={dataCityByPos?.data?.name}
+          defaultValue={dataCityByPos?.data?.name || localStorage.getItem('cache_city')}
           onChange={(v) => setInputField(v.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {

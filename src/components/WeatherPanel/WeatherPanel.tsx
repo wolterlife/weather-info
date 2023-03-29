@@ -39,10 +39,9 @@ function WeatherPanel() {
   }
 
   useEffect(() => {
-    if (pos.latitude !== -9999) {
+    if (pos.latitude !== -9999 && pos.latitude !== undefined) {
       getWeather(pos).then((res) => {
-        dispatch(changeWeather(getImage(res.data.daily.weathercode[0])));
-        console.log();
+        dispatch(changeWeather(getImage(res.data?.daily.weathercode[0])));
       });
     }
   }, [pos]);
