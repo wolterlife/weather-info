@@ -1,8 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from '../WeatherPanel/WeatherPanel.module.css';
+import { RootState } from '../../redux/store';
+import timeApi from '../../redux/api/timeApi';
 
 function PanelTime(props: any) {
-  const localTime = new Date();
+  const position = useSelector((state: RootState) => state.toolkitSlice.position);
+  const dateTimeApi = timeApi.useGetDateByLocQuery(position, {
+    skip: (position.latitude === -9999 || position.latitude === undefined),
+  });
 
   function getImage(i: number, mod: string) {
     switch (props.weather?.[mod].weathercode[i]) {
@@ -28,6 +34,10 @@ function PanelTime(props: any) {
     }
   }
 
+  function filterByTime(el: any) {
+    return +el.time.slice(11, 13) >= +dateTimeApi.data.date_time.slice(11, 13);
+  }
+
   const arrsToObjTimes = props.weather?.hourly.time.map((item: object, index: number) => (
     {
       time: item,
@@ -36,9 +46,8 @@ function PanelTime(props: any) {
     }
   ));
 
-  // TODO: (fix) В другом городе идёт сравнение с локальным времнем
   const resTimes = arrsToObjTimes
-    ?.filter((el: any) => +el.time.slice(11, 13) >= +localTime.toLocaleTimeString().slice(0, -6))
+    ?.filter(filterByTime)
     .map((item: any, index: number) => (
       <div key={item?.time} className={styles.containerDays}>
         <p className={styles.textDays}>{item.time.slice(11)}</p>
@@ -51,7 +60,8 @@ function PanelTime(props: any) {
     ));
 
   return (
-    resTimes?.slice(0, 24 - +localTime.toLocaleTimeString().slice(0, -6))
+      // resTimes?.slice(0, 24 - +dateTimeApi.data.date_time.slice(11, 13))
+      resTimes?.slice(0, 24 - +dateTimeApi.data.date_time.slice(11, 13))
     );
 }
 
