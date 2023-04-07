@@ -13,7 +13,7 @@ function InputCity() {
   const weather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
   const [inputCityField, setInputField] = useState('');
   const [countryCode, setFlag] = useState('');
-  const [getCityByPos, dataCityByPos] = cityApi.useLazyGetCityByPosQuery();
+  const [getCityByPos] = cityApi.useLazyGetCityByPosQuery();
   const [getPosByCity, newCityCheck] = cityApi.useLazyGetPosByCityQuery();
 
   function setCityCache(city: string, pos: object, flag: string): void {
@@ -54,6 +54,7 @@ function InputCity() {
             longitude: coords.longitude,
           }));
           setInputField(res.data.name);
+          console.log(res.data.name);
           setFlag(res.data.sys.country);
           setCityCache(
             res.data.name,
@@ -93,7 +94,7 @@ function InputCity() {
       <div className={styles.inputContent}>
         <span className={cn(styles.flag, `fi fi-${countryCode?.toLowerCase()}`)}>{countryCode}</span>
         <input
-          defaultValue={dataCityByPos?.data?.name || localStorage.getItem('cache_city')}
+          value={inputCityField}
           onChange={(v) => setInputField(v.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {

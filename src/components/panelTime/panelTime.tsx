@@ -60,7 +60,6 @@ function PanelTime(props: any) {
     ));
 
   return (
-      // resTimes?.slice(0, 24 - +dateTimeApi.data.date_time.slice(11, 13))
       resTimes?.slice(0, 24 - +dateTimeApi.data.date_time.slice(11, 13))
     );
 }
