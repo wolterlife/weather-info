@@ -17,10 +17,11 @@ function GoogleEvents() {
 
   useEffect(() => {
     if (auth) {
-      setInterval(() => {
+      const timer = setInterval(() => {
         apiCalendar?.listUpcomingEvents(5).then(({ result }: any) => {
           setEvents(result.items);
           setButtonVisible(false);
+          clearInterval(timer);
         });
       }, 5000);
     }
