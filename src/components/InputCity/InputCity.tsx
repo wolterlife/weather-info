@@ -1,104 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import '../../theme.css';
 import cn from 'classnames';
 import styles from './InputCity.module.css';
-import cityApi from '../../redux/api/cityApi';
-import { changePosition } from '../../redux/mainSlice';
-import { RootState } from '../../redux/store';
 import 'flag-icons/css/flag-icons.css';
 
 function InputCity() {
-  const dispatch = useDispatch();
-  const weather = useSelector((state: RootState) => state.toolkitSlice.currentWeather);
   const [inputCityField, setInputField] = useState('');
-  const [countryCode, setFlag] = useState('');
-  const [getCityByPos] = cityApi.useLazyGetCityByPosQuery();
-  const [getPosByCity, newCityCheck] = cityApi.useLazyGetPosByCityQuery();
-
-  function setCityCache(city: string, pos: object, flag: string): void {
-    if (city) {
-      localStorage.setItem('cache_city', city);
-      localStorage.setItem('cache_flag', flag);
-      localStorage.setItem('cache_pos', JSON.stringify(pos));
-      localStorage.setItem('cache_time', JSON.stringify(Date.now()));
-      localStorage.removeItem('cache_weather');
-    }
-  }
-
-  function isCacheLoading(): boolean {
-    const curDate = new Date();
-    const prevDate = localStorage.getItem('cache_time');
-    if (prevDate) return ((+curDate - +prevDate) / 60000 < 1);
-    return false;
-  }
-
-  // Get pos when user connected (by cache or geo)
-  useEffect(() => {
-    if (isCacheLoading()) {
-      const prevPos = JSON.parse(localStorage.getItem('cache_pos') || '{}');
-      dispatch(changePosition({
-        latitude: prevPos.lat,
-        longitude: prevPos.lon,
-      }));
-      setInputField(localStorage.getItem('cache_city') || '');
-      setFlag(localStorage.getItem('cache_flag') || '');
-    } else {
-      navigator.geolocation.getCurrentPosition(({ coords }) => {
-        getCityByPos({
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-        }).then((res) => {
-          dispatch(changePosition({
-            latitude: coords.latitude,
-            longitude: coords.longitude,
-          }));
-          setInputField(res.data.name);
-          console.log(res.data.name);
-          setFlag(res.data.sys.country);
-          setCityCache(
-            res.data.name,
-            {
-              lat: coords.latitude,
-              lon: coords.longitude,
-            },
-            res.data.sys.country,
-          );
-        });
-      });
-    }
-  }, []);
-
-  function changePosFromInput(city: string) {
-    if (city) {
-      getPosByCity(city).then((res) => {
-        setFlag(res.data?.[0]?.country);
-        dispatch(changePosition({
-          latitude: res.data?.[0]?.lat,
-          longitude: res.data?.[0]?.lon,
-        }));
-        setCityCache(
-          res.data?.[0]?.name,
-          {
-            lat: res.data?.[0]?.lat,
-            lon: res.data?.[0]?.lon,
-          },
-          res.data?.[0]?.country,
-        );
-      });
-    }
-  }
 
   return (
-    <div className={cn(styles.inputBackground, weather.slice(5, -4))}>
+    <div className={cn(styles.inputBackground, 'sun')}>
+      {/* <div className={cn(styles.inputBackground, weather.slice(5, -4))}> */}
       <div className={styles.inputContent}>
-        <span className={cn(styles.flag, `fi fi-${countryCode?.toLowerCase()}`)}>{countryCode}</span>
+        <span className={cn(styles.flag, 'fi fi-us')}>US</span>
         <input
           value={inputCityField}
           onChange={(v) => setInputField(v.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              changePosFromInput(inputCityField);
+            //
             }
           }}
           placeholder="Write city"
@@ -106,7 +25,7 @@ function InputCity() {
         />
         <input
           onClick={() => {
-            changePosFromInput(inputCityField);
+          //
           }}
           type="image"
           src="/img/search.png"
@@ -114,9 +33,10 @@ function InputCity() {
           alt="search"
         />
       </div>
-      <hr className={(newCityCheck.data?.length === 0) ? styles.lineError : styles.line} />
+      {/* eslint-disable-next-line max-len */}
+      {/* <hr className={(newCityCheck.data?.length === 0) ? styles.lineError : styles.line} /> */}
+      <hr className={styles.line} />
     </div>
-
   );
 }
 
