@@ -5,13 +5,14 @@ import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import styles from './WeatherPanel.module.css';
 import useTypedSelector from '../../hooks/useTypedSelector';
+import { weatherActionTypes } from '../../types/weather';
 
 function WeatherPanel() {
   const dispatch = useDispatch();
   const mode = useTypedSelector((state) => state.weather.mode);
 
   const setMode = (selectedMode: string) => {
-    dispatch({ type: 'SET_WEATHER_MODE', payload: selectedMode });
+    dispatch({ type: weatherActionTypes.SET_WEATHER_MODE, payload: selectedMode });
   };
 
   return (

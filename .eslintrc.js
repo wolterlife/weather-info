@@ -28,6 +28,10 @@ module.exports = {
   ],
   rules: {
     indent: 'off',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'warn',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
     'default-param-last': 0,
     'no-param-reassign': 0,
     'linebreak-style': 0,
