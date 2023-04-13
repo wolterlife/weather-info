@@ -28,6 +28,7 @@ module.exports = {
   ],
   rules: {
     indent: 'off',
+    'default-param-last': 0,
     'no-param-reassign': 0,
     'linebreak-style': 0,
     'import/extensions': [
