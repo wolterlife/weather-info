@@ -1,8 +1,18 @@
 export interface WeatherState {
   mode: string,
-  weather: Array<any>,
+  weather: any,
   loading: boolean,
   error: null | string,
+}
+
+interface IDay {
+  datetime: string,
+  temp: number,
+  tempmin: number,
+}
+
+export interface ResponseWeather {
+  days: IDay[],
 }
 
 export enum weatherActionTypes {
@@ -23,8 +33,8 @@ export interface WeatherFetchAction {
 }
 
 export interface WeatherFetchSuccessAction {
-  type: weatherActionTypes.FETCH_WEATHER_SUCCESS
-  payload: any[];
+  type: weatherActionTypes.FETCH_WEATHER_SUCCESS,
+  payload: ResponseWeather,
 }
 
 export interface WeatherFetchErrorAction {

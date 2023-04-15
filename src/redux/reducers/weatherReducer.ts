@@ -23,7 +23,7 @@ const weatherReducer = (state = initialState, action: WeatherAction): WeatherSta
         ...state,
         loading: false,
         error: null,
-        weather: action.payload,
+        weather: action.payload.days,
       };
     case weatherActionTypes.FETCH_WEATHER_ERROR:
       return {

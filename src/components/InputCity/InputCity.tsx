@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import '../../theme.css';
 import cn from 'classnames';
 import styles from './InputCity.module.css';
 import 'flag-icons/css/flag-icons.css';
+import { weatherActionTypes } from '../../types/weather';
 
 function InputCity() {
   const [inputCityField, setInputField] = useState('');
+  const dispatch = useDispatch();
 
   return (
     <div className={cn(styles.inputBackground, 'sun')}>
@@ -17,7 +20,7 @@ function InputCity() {
           onChange={(v) => setInputField(v.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-            //
+            dispatch({ type: weatherActionTypes.FETCH_WEATHER });
             }
           }}
           placeholder="Write city"
