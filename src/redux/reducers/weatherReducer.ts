@@ -23,13 +23,28 @@ const weatherReducer = (state = initialState, action: WeatherAction): WeatherSta
         ...state,
         loading: false,
         error: null,
-        weather: action.payload.days,
+        weather: action.payload.days
+          .map((
+            {
+              temp,
+              tempmin,
+              datetime,
+              icon,
+              hours,
+            },
+            ) => ({
+              temp,
+              tempmin,
+              datetime,
+              icon,
+              hours: hours.map(({ temp, datetime, icon }) => ({ icon, temp, datetime })),
+            })),
       };
     case weatherActionTypes.FETCH_WEATHER_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload.toString(),
         weather: [],
       };
     default:

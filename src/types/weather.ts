@@ -1,14 +1,22 @@
-export interface WeatherState {
-  mode: string,
-  weather: any,
-  loading: boolean,
-  error: null | string,
+interface IHourse {
+  datetime: string,
+  temp: string,
+  icon: string,
 }
 
 interface IDay {
   datetime: string,
   temp: number,
   tempmin: number,
+  icon: string,
+  hours: IHourse[],
+}
+
+export interface WeatherState {
+  mode: string,
+  weather: IDay[],
+  loading: boolean,
+  error: null | string,
 }
 
 export interface ResponseWeather {
@@ -39,7 +47,7 @@ export interface WeatherFetchSuccessAction {
 
 export interface WeatherFetchErrorAction {
   type: weatherActionTypes.FETCH_WEATHER_ERROR
-  payload: string;
+  payload: object;
 }
 
 export type WeatherAction =
