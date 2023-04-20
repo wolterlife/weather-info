@@ -37,7 +37,7 @@ export interface SetWeatherModAction {
 
 export interface WeatherFetchAction {
   type: weatherActionTypes.FETCH_WEATHER;
-  payload?: any;
+  payload: string;
 }
 
 export interface WeatherFetchSuccessAction {

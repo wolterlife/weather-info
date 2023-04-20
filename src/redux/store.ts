@@ -7,7 +7,7 @@ const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
 
 const rootReducer = combineReducers({
-    weather: weatherReducer,
+    weatherReducer,
 });
 
 export const store = configureStore({
