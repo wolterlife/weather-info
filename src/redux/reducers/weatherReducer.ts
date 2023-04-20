@@ -1,5 +1,4 @@
 import { WeatherAction, weatherActionTypes, WeatherState } from '../../types/weather';
-import getDayByDate from '../../helpers/getDayByDate';
 
 const initialState: WeatherState = {
   mode: 'daily',
@@ -18,6 +17,7 @@ const weatherReducer = (state = initialState, action: WeatherAction): WeatherSta
         ...state,
         loading: true,
         error: null,
+        timezone: '',
         weather: [],
       };
     case weatherActionTypes.FETCH_WEATHER_SUCCESS:
@@ -26,28 +26,7 @@ const weatherReducer = (state = initialState, action: WeatherAction): WeatherSta
         loading: false,
         error: null,
         timezone: action.payload.timezone,
-        weather: action.payload.days
-          .map((
-            {
-              temp,
-              tempmin,
-              datetime,
-              icon,
-              hours,
-            },
-            ) => ({
-              temp,
-              tempmin,
-              datetime,
-              icon,
-              dayweek: getDayByDate(datetime),
-              hours: hours.map(({ temp, datetimeEpoch, icon }) => (
-                {
-                  icon,
-                  temp,
-                  datetimeEpoch,
-                })),
-            })),
+        weather: action.payload.days,
       };
     case weatherActionTypes.FETCH_WEATHER_ERROR:
       return {

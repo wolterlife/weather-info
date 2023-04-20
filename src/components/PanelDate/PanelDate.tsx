@@ -1,16 +1,17 @@
 import React from 'react';
 import styles from '../WeatherPanel/WeatherPanel.module.css';
 import useTypedSelector from '../../hooks/useTypedSelector';
+import getDayByDate from '../../helpers/getDayByDate';
 
 function PanelDate() {
-  const { weather } = useTypedSelector((state) => state.weatherReducer);
+  const { weather, timezone } = useTypedSelector((state) => state.weatherReducer);
 
   const resDaily = weather.map(({
-    tempmin, temp, icon, dayweek, datetime,
+    tempmin, temp, icon, datetimeEpoch,
   }) => (
-    <div key={datetime} className={styles.containerDays}>
+    <div key={datetimeEpoch} className={styles.containerDays}>
       <p className={styles.textDays}>
-        {dayweek}
+        {getDayByDate(datetimeEpoch, timezone)}
       </p>
       <img
         className={styles.imgSmallDays}

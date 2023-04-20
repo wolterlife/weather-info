@@ -5,11 +5,10 @@ interface IHourse {
 }
 
 interface IDay {
-  datetime: string,
+  datetimeEpoch: number,
   temp: number,
   tempmin: number,
   icon: string,
-  dayweek: string,
   hours: IHourse[],
 }
 

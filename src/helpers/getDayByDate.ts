@@ -1,7 +1,6 @@
-const getDayByDate = (day: string) => {
-  const weekend = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const mDate = new Date(Date.parse(day));
-  return (weekend[mDate.getDay()]);
-};
+const getDayByDate = (day: number, timeZone: string) => new Date(day * 1000).toLocaleString('en', {
+    weekday: 'short',
+    timeZone,
+  });
 
 export default getDayByDate;
