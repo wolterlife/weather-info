@@ -1,4 +1,3 @@
-/* eslint-disable max-len */ // for comments
 import React from 'react';
 import '../../theme.css';
 import cn from 'classnames';
@@ -6,10 +5,13 @@ import { useDispatch } from 'react-redux';
 import styles from './WeatherPanel.module.css';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import { weatherActionTypes } from '../../types/weather';
+import PanelTime from '../PanelTime/PanelTime';
+import PanelDate from '../PanelDate/PanelDate';
 
 function WeatherPanel() {
   const dispatch = useDispatch();
   const { weather, loading, mode } = useTypedSelector((state) => state.weatherReducer);
+  const { icon, temp, tempmin } = weather[0] || 0;
 
   const setMode = (selectedMode: string) => {
     dispatch({ type: weatherActionTypes.SET_WEATHER_MODE, payload: selectedMode });
@@ -34,31 +36,31 @@ function WeatherPanel() {
         </button>
       </div>
       <div className={cn(styles.panel, 'sun')}>
-        {loading && <p className={styles.textNoCity}>Loading...</p>}
         {(weather.length > 0) && (
           <>
             <div className={styles.leftContainer}>
               <img
                 className={styles.imgMain}
+                src={`https://raw.githubusercontent.com/wolterlife/weather-info/master/public/img/${icon}.png`}
                 alt="Today Icon"
               />
               <div className={styles.todayContainer}>
                 <p className={styles.textToday}>Today</p>
                 <p className={styles.textDegree}>
-                  {/* {Math.round(info.daily?.temperature_2m_max[0])} */}
+                  {Math.round(temp)}
                   °/
-                  {/* {Math.round(info.daily?.temperature_2m_min[0])} */}
+                  {Math.round(tempmin)}
                   °
                 </p>
               </div>
             </div>
-            <div className={styles.rightContainer}>
-              {mode === 'daily' && <p>daily</p>}
-              {mode === 'hourly' && <p>hourly</p>}
-            </div>
+              {mode === 'daily' && <PanelDate /> }
+              {mode === 'hourly' && <PanelTime /> }
           </>
         )}
-        {(weather.length === 0 && !loading) && (<p className={styles.textNoCity}> Enter your city to get weather information</p>)}
+        {(weather.length === 0 && !loading)
+          && (<p className={styles.textNoCity}> Enter your city to get weather information</p>)}
+        {loading && <p className={styles.textNoCity}>Loading...</p>}
       </div>
     </div>
   );

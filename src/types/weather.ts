@@ -1,7 +1,7 @@
 interface IHourse {
-  datetime: string,
-  temp: string,
+  temp: number,
   icon: string,
+  datetimeEpoch: number,
 }
 
 interface IDay {
@@ -9,11 +9,13 @@ interface IDay {
   temp: number,
   tempmin: number,
   icon: string,
+  dayweek: string,
   hours: IHourse[],
 }
 
 export interface WeatherState {
   mode: string,
+  timezone: string,
   weather: IDay[],
   loading: boolean,
   error: null | string,
@@ -21,6 +23,7 @@ export interface WeatherState {
 
 export interface ResponseWeather {
   days: IDay[],
+  timezone: string,
 }
 
 export enum weatherActionTypes {
