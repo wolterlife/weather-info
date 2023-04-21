@@ -6,11 +6,12 @@ import styles from './InputCity.module.css';
 import 'flag-icons/css/flag-icons.css';
 import { weatherActionTypes } from '../../types/weather';
 import useTypedSelector from '../../hooks/useTypedSelector';
+import getCountyFlag from '../../helpers/getCountyFlag';
 
 function InputCity() {
-  const [inputCityField, setInputField] = useState('');
-  const error = useTypedSelector((state) => state.weatherReducer.error);
   const dispatch = useDispatch();
+  const [inputCityField, setInputField] = useState('');
+  const { error, timezone } = useTypedSelector((state) => state.weatherReducer);
 
   const getCityByInput = () => dispatch(
     { type: weatherActionTypes.FETCH_WEATHER, action: inputCityField },
@@ -19,7 +20,7 @@ function InputCity() {
   return (
     <div className={cn(styles.inputBackground, 'sun')}>
       <div className={styles.inputContent}>
-        <span className={cn(styles.flag, 'fi fi-us')}>US</span>
+        <span className={cn(styles.flag, getCountyFlag(timezone))}>__</span>
         <input
           value={inputCityField}
           onChange={(v) => setInputField(v.target.value)}
