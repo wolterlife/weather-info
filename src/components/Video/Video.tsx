@@ -4,7 +4,7 @@ import useTypedSelector from '../../hooks/useTypedSelector';
 
 function Video() {
   const [video, setVideo] = useState('');
-  const { currentWeather } = useTypedSelector((state) => state.weatherReducer);
+  const { currentWeather, loading } = useTypedSelector((state) => state.weatherReducer);
 
   useEffect(() => {
     setVideo(`${currentWeather}.webm`);
@@ -12,7 +12,8 @@ function Video() {
 
   return (
     <div>
-      <video preload="/img/backgroundLoading.jpg" autoPlay muted loop className={styles.video} src={`/video/${video}`} />
+      {!loading
+      && <video preload="/img/backgroundLoading.jpg" autoPlay muted loop className={styles.video} src={`/video/${video}`} />}
     </div>
   );
 }
