@@ -10,7 +10,9 @@ import PanelDate from '../PanelDate/PanelDate';
 
 function WeatherPanel() {
   const dispatch = useDispatch();
-  const { weather, loading, mode } = useTypedSelector((state) => state.weatherReducer);
+  const {
+    weather, currentWeather, loading, mode,
+  } = useTypedSelector((state) => state.weatherReducer);
   const { icon, temp, tempmin } = weather[0] || 0;
 
   const setMode = (selectedMode: string) => {
@@ -22,20 +24,20 @@ function WeatherPanel() {
       <div className={styles.topButtons}>
         <button
           type="button"
-          className={mode === 'daily' ? cn(styles.activeButton, 'sun') : cn(styles.button, 'sun')}
+          className={mode === 'daily' ? cn(styles.activeButton, currentWeather) : cn(styles.button, currentWeather)}
           onClick={() => setMode('daily')}
         >
           date
         </button>
         <button
           type="button"
-          className={mode === 'hourly' ? cn(styles.activeButton, 'sun') : cn(styles.button, 'sun')}
+          className={mode === 'hourly' ? cn(styles.activeButton, currentWeather) : cn(styles.button, currentWeather)}
           onClick={() => setMode('hourly')}
         >
           time
         </button>
       </div>
-      <div className={cn(styles.panel, 'sun')}>
+      <div className={cn(styles.panel, currentWeather)}>
         {(weather.length > 0) && (
           <>
             <div className={styles.leftContainer}>

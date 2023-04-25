@@ -15,6 +15,7 @@ interface IDay {
 export interface WeatherState {
   mode: string,
   timezone: string,
+  currentWeather: string,
   weather: IDay[],
   loading: boolean,
   error: null | string,

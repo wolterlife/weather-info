@@ -11,14 +11,14 @@ import getCountyFlag from '../../helpers/getCountyFlag';
 function InputCity() {
   const dispatch = useDispatch();
   const [inputCityField, setInputField] = useState('');
-  const { error, timezone } = useTypedSelector((state) => state.weatherReducer);
+  const { error, timezone, currentWeather } = useTypedSelector((state) => state.weatherReducer);
 
   const getCityByInput = () => dispatch(
     { type: weatherActionTypes.FETCH_WEATHER, action: inputCityField },
   );
 
   return (
-    <div className={cn(styles.inputBackground, 'sun')}>
+    <div className={cn(styles.inputBackground, currentWeather)}>
       <div className={styles.inputContent}>
         <span className={cn(styles.flag, getCountyFlag(timezone))}>__</span>
         <input

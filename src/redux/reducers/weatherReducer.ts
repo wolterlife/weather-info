@@ -2,6 +2,7 @@ import { WeatherAction, weatherActionTypes, WeatherState } from '../../types/wea
 
 const initialState: WeatherState = {
   mode: 'daily',
+  currentWeather: 'clear-day',
   timezone: '',
   weather: [],
   error: null,
@@ -27,6 +28,7 @@ const weatherReducer = (state = initialState, action: WeatherAction): WeatherSta
         error: null,
         timezone: action.payload.timezone,
         weather: action.payload.days,
+        currentWeather: action.payload.days[0].icon,
       };
     case weatherActionTypes.FETCH_WEATHER_ERROR:
       return {
