@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../WeatherPanel/WeatherPanel.module.css';
 import useTypedSelector from '../../hooks/useTypedSelector';
-import correctionTimeView from '../../helpers/correctionTime';
+import { correctionTimeView } from '../../helpers/correctionTime';
 
 function PanelTime() {
   const { weather, timezone } = useTypedSelector((state) => state.weatherReducer);
