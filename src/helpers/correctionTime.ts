@@ -34,3 +34,5 @@ export const getDateByTimeZone = (timeZone: string): string => {
     year: 'numeric',
   });
 };
+
+export const fromCurrTime = (el: any) => el.datetimeEpoch * 1000 >= Date.now();
