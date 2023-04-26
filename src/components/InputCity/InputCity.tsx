@@ -4,18 +4,16 @@ import '../../theme.css';
 import cn from 'classnames';
 import styles from './InputCity.module.css';
 import 'flag-icons/css/flag-icons.css';
-import { weatherActionTypes } from '../../types/weather';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import getCountyFlag from '../../helpers/getCountyFlag';
+import { fetchWeatherAction } from '../../redux/actions/weatherActions';
 
 function InputCity() {
   const dispatch = useDispatch();
   const [inputCityField, setInputField] = useState('');
   const { error, timezone, currentWeather } = useTypedSelector((state) => state.weatherReducer);
 
-  const getCityByInput = () => dispatch(
-    { type: weatherActionTypes.FETCH_WEATHER, action: inputCityField },
-  );
+  const getCityByInput = () => dispatch(fetchWeatherAction(inputCityField));
 
   return (
     <div className={cn(styles.inputBackground, currentWeather)}>

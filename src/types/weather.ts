@@ -26,7 +26,7 @@ export interface ResponseWeather {
   timezone: string,
 }
 
-export enum weatherActionTypes {
+enum weatherActionTypes {
   SET_WEATHER_MODE = 'SET_WEATHER_MODE',
   FETCH_WEATHER = 'FETCH_WEATHER',
   FETCH_WEATHER_SUCCESS = 'FETCH_WEATHER_SUCCESS',

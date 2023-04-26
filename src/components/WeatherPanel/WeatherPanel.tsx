@@ -4,9 +4,9 @@ import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import styles from './WeatherPanel.module.css';
 import useTypedSelector from '../../hooks/useTypedSelector';
-import { weatherActionTypes } from '../../types/weather';
 import PanelTime from '../PanelTime/PanelTime';
 import PanelDate from '../PanelDate/PanelDate';
+import { setModeAction } from '../../redux/actions/weatherActions';
 
 function WeatherPanel() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function WeatherPanel() {
   const { icon, temp, tempmin } = weather[0] || 0;
 
   const setMode = (selectedMode: string) => {
-    dispatch({ type: weatherActionTypes.SET_WEATHER_MODE, payload: selectedMode });
+    dispatch(setModeAction(selectedMode));
   };
 
   return (

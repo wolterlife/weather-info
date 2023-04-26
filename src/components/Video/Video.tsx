@@ -13,7 +13,7 @@ function Video() {
   return (
     <div>
       {!loading
-      && <video preload="/img/backgroundLoading.jpg" autoPlay muted loop className={styles.video} controls={false} src={`/video/${video}`} />}
+      && <video preload="/img/backgroundLoading.jpg" autoPlay muted loop className={styles.video} src={`/video/${video}`} />}
     </div>
   );
 }

@@ -1,4 +1,7 @@
-import { WeatherAction, weatherActionTypes, WeatherState } from '../../types/weather';
+import { WeatherAction, WeatherState } from '../../types/weather';
+import {
+ SET_WEATHER_MODE, FETCH_WEATHER, FETCH_WEATHER_ERROR, FETCH_WEATHER_SUCCESS,
+} from '../actions/weatherActions';
 
 const initialState: WeatherState = {
   mode: 'daily',
@@ -11,9 +14,9 @@ const initialState: WeatherState = {
 
 const weatherReducer = (state = initialState, action: WeatherAction): WeatherState => {
   switch (action.type) {
-    case weatherActionTypes.SET_WEATHER_MODE:
+    case SET_WEATHER_MODE:
       return { ...state, mode: action.payload };
-    case weatherActionTypes.FETCH_WEATHER:
+    case FETCH_WEATHER:
       return {
         ...state,
         loading: true,
@@ -21,7 +24,7 @@ const weatherReducer = (state = initialState, action: WeatherAction): WeatherSta
         timezone: '',
         weather: [],
       };
-    case weatherActionTypes.FETCH_WEATHER_SUCCESS:
+    case FETCH_WEATHER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -30,7 +33,7 @@ const weatherReducer = (state = initialState, action: WeatherAction): WeatherSta
         weather: action.payload.days,
         currentWeather: action.payload.days[0].icon,
       };
-    case weatherActionTypes.FETCH_WEATHER_ERROR:
+    case FETCH_WEATHER_ERROR:
       return {
         ...state,
         loading: false,
