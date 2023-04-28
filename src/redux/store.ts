@@ -1,21 +1,18 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import weatherReducer from './reducers/weatherReducer';
+import { persistStore } from 'redux-persist';
 import rootWatcher from './saga';
+import persistedReducer from './reducers/cacheReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
 
-const rootReducer = combineReducers({
-    weatherReducer,
-});
-
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
     .concat(middleware),
 });
 
 sagaMiddleware.run(rootWatcher);
-
-export type RootState = ReturnType<typeof rootReducer>
+export const persistor = persistStore(store);
+export type RootState = ReturnType<typeof persistedReducer>

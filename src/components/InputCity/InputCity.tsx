@@ -10,8 +10,10 @@ import { fetchWeatherAction } from '../../redux/actions/weatherActions';
 
 function InputCity() {
   const dispatch = useDispatch();
-  const [inputCityField, setInputField] = useState('');
-  const { error, timezone, currentWeather } = useTypedSelector((state) => state.weatherReducer);
+  const {
+    error, timezone, currentWeather, address,
+  } = useTypedSelector((state) => state.weatherReducer);
+  const [inputCityField, setInputField] = useState(address);
 
   const getCityByInput = () => dispatch(fetchWeatherAction(inputCityField));
 

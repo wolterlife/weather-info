@@ -16,6 +16,7 @@ export interface WeatherState {
   mode: string,
   timezone: string,
   currentWeather: string,
+  address: string,
   weather: IDay[],
   loading: boolean,
   error: null | string,
@@ -24,6 +25,7 @@ export interface WeatherState {
 export interface ResponseWeather {
   days: IDay[],
   timezone: string,
+  address: string,
 }
 
 enum weatherActionTypes {
