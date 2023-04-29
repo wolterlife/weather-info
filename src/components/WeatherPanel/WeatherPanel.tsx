@@ -43,7 +43,7 @@ function WeatherPanel() {
             <div className={styles.leftContainer}>
               <img
                 className={styles.imgMain}
-                src={`https://raw.githubusercontent.com/wolterlife/weather-info/master/public/img/${icon}.png`}
+                src={`img/${icon}.png`}
                 alt="Today Icon"
               />
               <div className={styles.todayContainer}>

@@ -15,7 +15,7 @@ function PanelDate() {
       </p>
       <img
         className={styles.imgSmallDays}
-        src={`https://raw.githubusercontent.com/wolterlife/weather-info/master/public/img/${icon}.png`}
+        src={`img/${icon}.png`}
         alt="imgWeather"
       />
       <p className={styles.textDaysDegree}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import '../../theme.css';
 import cn from 'classnames';
@@ -16,6 +16,17 @@ function InputCity() {
   const [inputCityField, setInputField] = useState(address);
 
   const getCityByInput = () => dispatch(fetchWeatherAction(inputCityField));
+
+  useEffect(() => { // TODO: двойной рендер (не из-за навигации)
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      const { latitude, longitude } = coords;
+      dispatch(fetchWeatherAction(`${latitude},${longitude}`));
+    });
+  }, []);
+
+  useEffect(() => {
+    if (address.match(/[0-9]/g)) setInputField(timezone);
+  }, [address]);
 
   return (
     <div className={cn(styles.inputBackground, currentWeather)}>
