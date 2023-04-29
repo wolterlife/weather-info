@@ -21,6 +21,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src","declaration.d.ts"
+    "src","declaration.d.ts", "node_modules/redux-persist-transform-expire"
   ],
 }

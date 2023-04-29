@@ -5,7 +5,7 @@ import cn from 'classnames';
 import styles from './InputCity.module.css';
 import 'flag-icons/css/flag-icons.css';
 import useTypedSelector from '../../hooks/useTypedSelector';
-import getCountyFlag from '../../helpers/getCountyFlag';
+import getCountryFlag from '../../helpers/getCountryFlag';
 import { fetchWeatherAction } from '../../redux/actions/weatherActions';
 
 function InputCity() {
@@ -20,7 +20,7 @@ function InputCity() {
   return (
     <div className={cn(styles.inputBackground, currentWeather)}>
       <div className={styles.inputContent}>
-        <span className={cn(styles.flag, getCountyFlag(timezone))}>__</span>
+        <span className={cn(styles.flag, getCountryFlag(timezone))}>__</span>
         <input
           value={inputCityField}
           onChange={(v) => setInputField(v.target.value)}

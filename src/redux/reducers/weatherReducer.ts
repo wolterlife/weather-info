@@ -3,7 +3,7 @@ import {
  SET_WEATHER_MODE, FETCH_WEATHER, FETCH_WEATHER_ERROR, FETCH_WEATHER_SUCCESS,
 } from '../actions/weatherActions';
 
-const initialState: WeatherState = {
+export const initialState: WeatherState = {
   mode: 'daily',
   currentWeather: 'clear-day',
   timezone: '',

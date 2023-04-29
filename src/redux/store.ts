@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import { persistStore } from 'redux-persist';
 import rootWatcher from './saga';
 import persistedReducer from './reducers/cacheReducer';
+import rootReducer from './reducers/rootReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
@@ -15,4 +16,4 @@ export const store = configureStore({
 
 sagaMiddleware.run(rootWatcher);
 export const persistor = persistStore(store);
-export type RootState = ReturnType<typeof persistedReducer>
+export type RootState = ReturnType<typeof rootReducer>
