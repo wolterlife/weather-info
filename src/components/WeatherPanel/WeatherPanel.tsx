@@ -24,14 +24,14 @@ function WeatherPanel() {
       <div className={styles.topButtons}>
         <button
           type="button"
-          className={mode === 'daily' ? cn(styles.activeButton, currentWeather) : cn(styles.button, currentWeather)}
+          className={cn(currentWeather, (mode === 'daily') ? styles.activeButton : styles.button)}
           onClick={() => setMode('daily')}
         >
           date
         </button>
         <button
           type="button"
-          className={mode === 'hourly' ? cn(styles.activeButton, currentWeather) : cn(styles.button, currentWeather)}
+          className={cn(currentWeather, (mode === 'hourly') ? styles.activeButton : styles.button)}
           onClick={() => setMode('hourly')}
         >
           time
