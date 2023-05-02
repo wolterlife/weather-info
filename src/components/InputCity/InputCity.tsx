@@ -44,7 +44,7 @@ function InputCity() {
         <input
           onClick={getCityByInput}
           type="image"
-          src="/img/search.png"
+          src="img/search.png"
           className={styles.imgSearch}
           alt="search"
         />
