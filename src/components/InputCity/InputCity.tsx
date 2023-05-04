@@ -17,7 +17,7 @@ function InputCity() {
 
   const getCityByInput = () => dispatch(fetchWeatherAction(inputCityField));
 
-  useEffect(() => { // TODO: двойной рендер (не из-за навигации)
+  useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       const { latitude, longitude } = coords;
       dispatch(fetchWeatherAction(`${latitude},${longitude}`));
