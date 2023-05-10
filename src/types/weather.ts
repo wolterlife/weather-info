@@ -28,30 +28,23 @@ export interface ResponseWeather {
   address: string,
 }
 
-enum weatherActionTypes {
-  SET_WEATHER_MODE = 'SET_WEATHER_MODE',
-  FETCH_WEATHER = 'FETCH_WEATHER',
-  FETCH_WEATHER_SUCCESS = 'FETCH_WEATHER_SUCCESS',
-  FETCH_WEATHER_ERROR = 'FETCH_WEATHER_ERROR',
-}
-
 export interface SetWeatherModAction {
-  type: weatherActionTypes.SET_WEATHER_MODE,
+  type: 'SET_WEATHER_MODE',
   payload: string;
 }
 
 export interface WeatherFetchAction {
-  type: weatherActionTypes.FETCH_WEATHER;
+  type: 'FETCH_WEATHER';
   payload: string;
 }
 
 export interface WeatherFetchSuccessAction {
-  type: weatherActionTypes.FETCH_WEATHER_SUCCESS,
+  type: 'FETCH_WEATHER_SUCCESS',
   payload: ResponseWeather,
 }
 
 export interface WeatherFetchErrorAction {
-  type: weatherActionTypes.FETCH_WEATHER_ERROR
+  type: 'FETCH_WEATHER_ERROR'
   payload: object;
 }
 

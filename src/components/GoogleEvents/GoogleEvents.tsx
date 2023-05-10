@@ -1,26 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import cn from 'classnames';
 import styles from './GoogleEvents.module.css';
+import { attachSignIn, checkAuth, exitFoo } from '../../helpers/googleAuth';
+import EventList from '../EventList/EventList';
+import useTypedSelector from '../../hooks/useTypedSelector';
 
 function GoogleEvents() {
-  // const res = events.filter((el: any) => el.start.dateTime?.slice(0, 10) === getCurrentDate())
-  //   .map((item: any) => (
-  //     <div key={item.id} className={styles.eventList}>
-  //       <p className={cn(styles.textTime, currentWeather.slice(5, -4))}>
-  //         {item?.start.dateTime?.slice(11, 16)}
-  //       </p>
-  //       <p className={styles.textEvent}>{item?.summary}</p>
-  //     </div>
-  //   ));
+  const { currentWeather } = useTypedSelector((state) => state.weatherReducer);
+  const [isAuth, setAuth] = useState(false);
+
+  useEffect(() => {
+    checkAuth(setAuth);
+  }, []);
+
+  if (isAuth) {
+    return (
+      <>
+        <button
+          className={cn(styles.buttonExit, currentWeather)}
+          type="button"
+          onClick={() => exitFoo(setAuth)}
+        >
+          Logout
+        </button>
+        <EventList isShowEvents={isAuth} />
+      </>
+    );
+  }
 
   return (
-    <>
-      <input className={styles.buttonCalendar} type="image" src="/img/google-calendar.png" alt="sign in" />
-      <div className={styles.container}>
-        <div className={styles.containerEvents}>
-          {/* {res} */}
-        </div>
-      </div>
-    </>
+    <input
+      onFocus={() => attachSignIn(setAuth)}
+      id="loginButton"
+      className={styles.buttonCalendar}
+      type="image"
+      src="img/google-calendar.png"
+      alt="sign in"
+    />
   );
 }
 

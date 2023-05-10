@@ -1,10 +1,10 @@
-export const correctionTimeView = (time: number, timeZone: string): string => { // 09:00:00
+const correctionTimeView = (time: number, timeZone: string): string => { // 09:00:00
   const result = new Date(time * 1000).toLocaleTimeString('ru-RU', { timeZone }); // use timezone
   if (result[0] === '0') return result.slice(1, 5); // 9:00
   return result.slice(0, 5); // 10:00:00 -> 10:00
 };
 
-export const getTimeByTimeZone = (timeZone: string): string => {
+const getTimeByTimeZone = (timeZone: string): string => {
   if (timeZone) {
     const formatter = new Intl.DateTimeFormat([], {
       hour: 'numeric',
@@ -16,7 +16,7 @@ export const getTimeByTimeZone = (timeZone: string): string => {
   return new Date().toLocaleTimeString().slice(0, -3);
 };
 
-export const getDateByTimeZone = (timeZone: string): string => {
+const getDateByTimeZone = (timeZone: string): string => {
   if (timeZone) {
     const formatter = new Intl.DateTimeFormat('en-EN', {
       weekday: 'long',
@@ -35,4 +35,23 @@ export const getDateByTimeZone = (timeZone: string): string => {
   });
 };
 
-export const fromCurrTime = (el: any) => el.datetimeEpoch * 1000 >= Date.now();
+const fromCurrTime = (el: any) => el.datetimeEpoch * 1000 >= Date.now();
+
+const calendarStartDay = () => new Date().toISOString();
+
+const calendarEndDay = () => {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).toISOString();
+};
+
+const calendarEventTime = ({ dateTime } : {dateTime: string}) => dateTime.slice(11, -9);
+
+export {
+  getTimeByTimeZone,
+  getDateByTimeZone,
+  fromCurrTime,
+  correctionTimeView,
+  calendarStartDay,
+  calendarEndDay,
+  calendarEventTime,
+};

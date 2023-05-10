@@ -3,7 +3,7 @@ import {
  SET_WEATHER_MODE, FETCH_WEATHER, FETCH_WEATHER_ERROR, FETCH_WEATHER_SUCCESS,
 } from '../actions/weatherActions';
 
-export const initialState: WeatherState = {
+export const initStateWeather: WeatherState = {
   mode: 'daily',
   currentWeather: 'clear-day',
   timezone: '',
@@ -13,7 +13,7 @@ export const initialState: WeatherState = {
   loading: false,
 };
 
-const weatherReducer = (state = initialState, action: WeatherAction): WeatherState => {
+export const weatherReducer = (state = initStateWeather, action: WeatherAction): WeatherState => {
   switch (action.type) {
     case SET_WEATHER_MODE:
       return { ...state, mode: action.payload };
@@ -46,5 +46,3 @@ const weatherReducer = (state = initialState, action: WeatherAction): WeatherSta
       return state;
   }
 };
-
-export default weatherReducer;

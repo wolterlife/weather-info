@@ -1,4 +1,10 @@
-const FETCH_CALENDAR = 'FETCH_CALENDAR';
-const FETCH_CALENDAR_SUCCESS = 'FETCH_CALENDAR';
+import { createAction } from '@reduxjs/toolkit';
 
-export { FETCH_CALENDAR, FETCH_CALENDAR_SUCCESS };
+const FETCH_CALENDAR = 'FETCH_CALENDAR';
+
+const fetchCalendarAction = createAction(FETCH_CALENDAR);
+
+export {
+  FETCH_CALENDAR,
+  fetchCalendarAction,
+};
