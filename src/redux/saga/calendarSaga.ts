@@ -1,9 +1,14 @@
-import { call, takeEvery } from 'redux-saga/effects';
-import { FETCH_CALENDAR } from '../actions/calendarActions';
-import getEvents from '../../api/googleApi';
+import { call, put, takeEvery } from 'redux-saga/effects';
+import { FETCH_CALENDAR, fetchCalendarBadAction, fetchCalendarGoodAction } from '../actions/calendarActions';
+import { fetchEvents } from '../../api/googleApi';
 
 function* calendarWorker() {
-  yield call(getEvents);
+  try {
+    const data: Response = yield call(fetchEvents);
+    yield put(fetchCalendarGoodAction(data));
+  } catch (err) {
+    yield put(fetchCalendarBadAction(err));
+  }
 }
 
 function* calendarWatcher() {

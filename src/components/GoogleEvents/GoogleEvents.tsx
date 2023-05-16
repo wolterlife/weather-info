@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import styles from './GoogleEvents.module.css';
-import { attachSignIn, checkAuth, exitFoo } from '../../helpers/googleAuth';
 import EventList from '../EventList/EventList';
 import useTypedSelector from '../../hooks/useTypedSelector';
+import { attachSignIn, checkAuth, exitFoo } from '../../api/googleApi';
 
 function GoogleEvents() {
   const { currentWeather } = useTypedSelector((state) => state.weatherReducer);
