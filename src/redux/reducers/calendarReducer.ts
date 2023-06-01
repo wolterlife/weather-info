@@ -1,5 +1,5 @@
 import { CalendarAction, CalendarState } from '../../types/calendar';
-import { FETCH_CALENDAR, FETCH_CALENDAR_ERROR, FETCH_CALENDAR_SUCCESS } from '../actions/calendarActions';
+import { FETCH_CALENDAR, FETCH_CALENDAR_ERROR, FETCH_CALENDAR_SUCCESS } from '../../actions/calendarActions';
 
 export const initStateCalendar: CalendarState = {
   events: [],

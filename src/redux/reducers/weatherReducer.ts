@@ -1,7 +1,7 @@
 import { WeatherAction, WeatherState } from '../../types/weather';
 import {
  SET_WEATHER_MODE, FETCH_WEATHER, FETCH_WEATHER_ERROR, FETCH_WEATHER_SUCCESS,
-} from '../actions/weatherActions';
+} from '../../actions/weatherActions';
 
 export const initStateWeather: WeatherState = {
   mode: 'daily',

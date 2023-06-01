@@ -6,7 +6,7 @@ import styles from './InputCity.module.css';
 import 'flag-icons/css/flag-icons.css';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import getCountryFlag from '../../helpers/getCountryFlag';
-import { fetchWeatherAction } from '../../redux/actions/weatherActions';
+import { fetchWeatherAction } from '../../actions/weatherActions';
 
 function InputCity() {
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { FETCH_CALENDAR, fetchCalendarBadAction, fetchCalendarGoodAction } from '../actions/calendarActions';
+import { FETCH_CALENDAR, fetchCalendarBadAction, fetchCalendarGoodAction } from '../../actions/calendarActions';
 import { fetchEvents } from '../../api/googleApi';
 
 function* calendarWorker() {

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 import styles from '../GoogleEvents/GoogleEvents.module.css';
 import { calendarEventTime } from '../../helpers/correctionTime';
-import { fetchCalendarAction } from '../../redux/actions/calendarActions';
+import { fetchCalendarAction } from '../../actions/calendarActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
 
 function EventList({ isShowEvents } : {isShowEvents: boolean}) {

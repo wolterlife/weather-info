@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { ResponseWeather } from '../../types/weather';
+import { ResponseWeather } from '../types/weather';
 
 const SET_WEATHER_MODE = 'SET_WEATHER_MODE';
 const FETCH_WEATHER = 'FETCH_WEATHER';

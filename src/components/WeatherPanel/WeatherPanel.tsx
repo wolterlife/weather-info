@@ -6,7 +6,7 @@ import styles from './WeatherPanel.module.css';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import PanelTime from '../PanelTime/PanelTime';
 import PanelDate from '../PanelDate/PanelDate';
-import { setModeAction } from '../../redux/actions/weatherActions';
+import { setModeAction } from '../../actions/weatherActions';
 
 function WeatherPanel() {
   const dispatch = useDispatch();
