@@ -44,7 +44,7 @@ const calendarEndDay = () => {
   return new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).toISOString();
 };
 
-const calendarEventTime = ({ dateTime } : {dateTime: string}) => dateTime.slice(11, -9);
+const calendarEventTime = ({ dateTime } : {dateTime: string}) => dateTime?.slice(11, -9);
 
 export {
   getTimeByTimeZone,
